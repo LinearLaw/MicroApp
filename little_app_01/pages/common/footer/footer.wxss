@@ -1,0 +1,7 @@
+.footers{
+  text-align: center;
+  padding:20rpx;
+  font-size:40rpx;
+  border-top:1px solid #efefef;
+  vertical-align: middle;
+}

@@ -1,3 +1,4 @@
 /* pages/form/form.wxss */
 
-@import "../common/header/header.wxss"
+@import "../common/header/header.wxss";
+@import "../common/footer/footer.wxss";

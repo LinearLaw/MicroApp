@@ -1,3 +1,5 @@
 <template name="footer">
-  <text>This is footer</text>
+  <view class="footers">
+    <text class>This is footer</text>
+  </view>
 </template>

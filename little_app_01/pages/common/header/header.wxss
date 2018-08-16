@@ -2,7 +2,8 @@
   text-align: center;
   color:#fff;
   background:#000;
-  padding:10px;
+  padding:20rpx;
+  font-size:40rpx;
   vertical-align: middle;
 }
 .pull-left{
