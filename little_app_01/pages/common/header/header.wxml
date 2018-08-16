@@ -1,0 +1,6 @@
+
+<view class="headers">
+  <navigator url="{{ indexSrc }}" class="pull-left">{{'<'}}</navigator>
+  <text bindtap="headerShowInfo">This is Header</text>
+  <text class="pull-right">...</text>
+</view>

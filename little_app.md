@@ -1,0 +1,145 @@
+# WXML
+    
+    小程序界的html。
+
+    基本页面标签
+        1、视图容器
+
+        （1）<view></view>
+            ≈div，具备block属性
+
+        （2）<scroll-view></scroll-view>
+            可滚动视图容器
+
+        （3）<swiper ></swiper>
+            滑块视图容器
+
+        2、基础内容
+        （1）<text></text>
+            ≈span，具备inline属性
+
+        （2）<icon></icon>
+            专有，图标
+
+        （3）<progress></progress>
+            专有，进度条容器
+
+        3、多媒体内容
+        （1）<image></image>
+            ≈img，具有一系列私有属性
+            mode="cover"
+            src="xxx.jpg"
+        
+        （2）<video></video>
+            ≈video，视频
+
+        （3）<audio></audio>
+            ≈video，音频
+
+        4、导航
+        （1）<navigator></navigator>
+            ≈a，应用链接
+
+        5、表单
+            button
+            form
+            input
+            checkbox    单选器
+            radio   多选器
+            picker  列表选择器
+            picker-view     内嵌列表选择器
+            slider  滚动选择器
+            switch  开关选择器
+            label   标签
+        
+        5、<block></block>
+            一个包装元素，不会在页面中做任何渲染，但可以接受控制属性
+            例如: <block wx:if={{true}}> <view>真香</view>  </block>
+
+    模板标签
+        1、<template></template>
+            定义一段模板，这段标签用template包裹；
+            name="msgItem"，定义了该段模板的名称为msgItem
+
+            使用模板时，使用is来声明需要使用的模板，并将需要的数据导入
+            <template is="msgItem" data="{{ ...item }}"  ></tempalte>
+
+            Tips：进阶语法，对模板进行自动筛选
+                <block wx:for="{{ [1,2,3,4,5,6,7] }}">
+                    <template is="{{ item%2 == 0?"even":"odd" }}"></template>
+                </block>
+
+        2、<import />和<include />
+        （1）、import可以对文件进行引用，并使用该文件内部定义的模板。
+
+            eg：<import src="./item.wxml" />
+                <template is="item" data="{{ text:"abc" }}" ></template>
+        
+            Tips：需要注意的是，A引用的模板B中如果定义了另一个模板C，可以引用该模板，
+                但是A引用的模板B中如果引用了其他模板D，A就不能引用这个模板了。
+
+        （2）、include与import不同，
+            include引用的内容，
+            可以将该文件除了<template />和<wxs />之外的整个代码都引入。
+            引入的是直接的一个代码块。
+
+            eg：
+                <include src="header.wxml"></include>
+                <view> WXML CONTENT HERE </view>
+                <include src="footer.wxml"></include>
+
+    事件绑定
+        1、语法
+            事件分为冒泡事件和不冒泡事件，
+                冒泡事件用bind
+                不冒泡事件用catch
+
+            前缀定义是否冒泡（catch,bind），后缀定义事件类型
+                用户事件类型：
+                    tap、
+                    touchstart、touchmove、touchcancel、touchend、
+                    longpress、longtap
+                动画事件类型：
+                    transitionend、
+                    animationstart、
+                    animationiteration、
+                    animationend、
+
+                高级用户才会用到的事件
+                    touchforcechange:3D touch，重按触发
+
+        2、事件属性
+            触发事件的函数会带有一个事件对象
+            {
+                type:"事件类型",
+                timeStamp:"事件触发时时间戳",
+                target:"触发事件组件的属性集合",
+                currentTarget:"当前组件的属性值集合"
+            }
+
+    列表循环与逻辑判定
+        1、wx:for
+            <view wx:for="{{array}}">
+                {{ index }}  {{ item.message }}  
+            </view>
+
+            循环下，默认的索引和变量名分别为 index item，
+            通过  wx:for-index="_idx"
+                  wx:for-item="_items"重定义
+
+        2、wx:if
+            <view wx:if="{{length > 5}}"> 1 </view>
+            <view wx:elif="{{length > 2}}"> 2 </view>
+            <view wx:else> 3 </view>
+
+#   WXS
+
+    小程序界的js。
+    语法与js基本一致。
+    
+
+
+#   WXSS
+
+    小程序界的CSS。
+    语法与CSS基本一致。

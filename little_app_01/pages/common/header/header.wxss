@@ -1,0 +1,13 @@
+.headers{
+  text-align: center;
+  color:#fff;
+  background:#000;
+  padding:10px;
+  vertical-align: middle;
+}
+.pull-left{
+  float:left;
+}
+.pull-right{
+  float:right;
+}

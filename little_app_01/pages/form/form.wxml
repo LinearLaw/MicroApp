@@ -1,0 +1,4 @@
+<include src="../common/header/header.wxml"/>
+<view>
+  <text>This is form page</text>
+</view>

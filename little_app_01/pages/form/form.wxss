@@ -1,0 +1,3 @@
+/* pages/form/form.wxss */
+
+@import "../common/header/header.wxss"
