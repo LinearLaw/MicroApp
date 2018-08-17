@@ -88,3 +88,20 @@
                 如果组件中已经存在该名称，不会被覆盖，mixin的值无效。
             对于methods中的事件或者其他自定义的生命周期函数，两者将会共存，
                 但是在执行方法时，组件内同名方法先执行，然后执行mixin的方法。
+
+    数据绑定方式
+        原生的数据绑定：
+            this.setData({ 'title':'this is hello world' });
+            在setData后，js变量值被改变，然后去更改视图中的显示值。
+            如果多次使用setData，可能有性能问题。
+
+        wepy方式：
+            直接执行this.title = 'this is hello world'即可。
+            每次函数执行完成后，wepy将会进行脏数据检查，来统一修改视图。
+            但是注意，在函数有异步的情况下，你需要手动更新脏数据检查。
+                handleClick(){
+                    setTimeout(()=>{
+                        this.title = "title album";
+                        this.$apply();//执行脏数据检查
+                    })
+                }
