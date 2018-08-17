@@ -50,4 +50,41 @@
                 bindtap="click" data-index={{ a }} ——> @tap="click( {{ a }} )"
 
             (4)、循环的写法进行了更改
-                原生  <view wx:for></view>
+                原生:    <view wx:for="{{array}}">
+                            {{ index }} {{ item.message }}
+                        </view>
+
+                wepy:    <repeat for="{{ array }}" key="_index" index="_index" item="_item">
+                            <view> {{_index}} {{_item.message}}  </view>
+                        </repeat>
+
+    Mixin混合
+
+        有点类似于js的继承，不过有所不同，它的继承是针对wepy文件和js文件进行的。
+        
+        mixin的文件：test.js
+
+            export default class Test extends wepy.mixin{
+                data={
+                    abb:"123"
+                };
+                methods={
+                    handleClick(){
+                        console.log(555);
+                    }
+                }
+            }
+
+        组件中混入test.js中的变量和方法
+
+            import Test from "./test.js";
+            export default class Page_1 extends wepy.page{
+                data={
+
+                };
+                mixins = [Test];
+            }
+        Tips：进行指定mixin后的wpy组件，将会具有test.js中定义的data数据
+                如果组件中已经存在该名称，不会被覆盖，mixin的值无效。
+            对于methods中的事件或者其他自定义的生命周期函数，两者将会共存，
+                但是在执行方法时，组件内同名方法先执行，然后执行mixin的方法。
