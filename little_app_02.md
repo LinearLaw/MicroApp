@@ -105,3 +105,21 @@
                         this.$apply();//执行脏数据检查
                     })
                 }
+
+    router设定
+        wepy相比vue，其router的自定义化被削弱。
+        路由配置写在根组件app.wpy中。
+            export default class extends wepy.app {
+                config = {
+                    pages:[
+                        'pages/index',
+                        'pages/hello'
+                    ],
+                    window:{
+                        backgroundTextStyle:'light',
+                        navigationBarBackgroundColor:'#fff',
+                        navigationBarTitleText:'WeChat',
+                        navigationBarTextStyle:'black'
+                    }
+                }
+            }

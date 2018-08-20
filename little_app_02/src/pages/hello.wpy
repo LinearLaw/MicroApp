@@ -1,7 +1,15 @@
 <template>
     <view class="hello"> 
-        
-
+        <view class="viewItem">
+            <view class="title" slot="title">1.1、事件绑定</view>
+            <button class="event" @tap="tapEvent('bubble')"> 冒泡tap事件，bindtap——>@tap </button>
+            <button @tap.stop="tapEvent('cancle bubble')"> 阻止冒泡的tap，catchtap——>@tap.stop </button>
+        </view>
+        <view class="viewItem">
+            <view class="title" slot="title">1.2、数据绑定</view>
+            <text wx:if="{{ notice }}" class="noticeInfo">提示语</text>
+            <button @tap="switchNotice">Toggle</button>
+        </view>
     </view>
 
 </template>
@@ -23,11 +31,33 @@
 
      */
     import wepy from "wepy";
+
     export default class Hello extends wepy.page{
         config = {
             navigationBarTitleText: 'Hello world'
         }
+        components = {
+
+        }
         data = {
+            notice:true
+        }
+        /**
+         * @desc methods 里面只放原生事件触发的函数，最后一个参数为事件对象，
+                通过事件对象，可以访问到触发事件的DOM元素。
+         */
+        methods = {
+            tapEvent(text,event){
+                console.log("tap event occured : " + text  );
+            },
+            switchNotice(){
+                this.notice = !this.notice;
+            }
+        }
+        /**
+         * @desc 与methods不同的是，events主要存放的是$broadcast、$emit、$invoke等事件的函数。
+         */
+        events = {
 
         }
     }
@@ -36,6 +66,19 @@
 <style lang="less">
     .hello{
         padding:10px;
+    }
+    .viewItem{
+        font-size:15px;
+    }
+    .viewItem button{
+        font-size:14px;
+    }
+    .viewItem button{
+        margin-top:10px;
+    }
+    .viewItem .noticeInfo{
+        font-size:14px;
+        color:#ff4300;
     }
 
 </style>
