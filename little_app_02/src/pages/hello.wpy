@@ -1,11 +1,27 @@
 <template>
     <view class="hello"> 
-        Hello world
+        
+
     </view>
 
 </template>
 
 <script>
+    /**
+     * @desc 综合验证
+            1、事件绑定、数据绑定
+            2、列表渲染、条件渲染
+            3、组件通信
+                （1）、父元素向子元素传值
+                （2）、子元素向父元素传值
+                （3）、跨组件通信
+            4、Tab实现
+            5、Slot内容分发
+            6、Ajax请求
+            7、请求拦截器
+            8、原生能力调取
+
+     */
     import wepy from "wepy";
     export default class Hello extends wepy.page{
         config = {
