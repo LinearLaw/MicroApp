@@ -1,0 +1,26 @@
+<template>
+    <view class="hello"> 
+        Hello world
+    </view>
+
+</template>
+
+<script>
+    import wepy from "wepy";
+    export default class Hello extends wepy.page{
+        config = {
+            navigationBarTitleText: 'Hello world'
+        }
+        data = {
+
+        }
+    }
+</script>
+
+<style lang="less">
+    .hello{
+        padding:10px;
+    }
+
+</style>
+

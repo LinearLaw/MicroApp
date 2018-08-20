@@ -10,6 +10,15 @@
 </style>
 
 <script>
+/**
+ * @desc app.wpy，是该小程序的统一的入口文件。
+        在这里写入关于页面配置，页面全局颜色，样式
+        全局变量也写在此。
+        在页面中调用内部的值时，使用this.$parent即可访问
+          eg：this.$parent.globalData.userInfo
+ *
+ *
+ */
 import wepy from 'wepy'
 import 'wepy-async-function'
 
@@ -17,7 +26,8 @@ import 'wepy-async-function'
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/index'
+      'pages/index',
+      'pages/hello'
     ],
     window: {
       backgroundTextStyle: 'light',

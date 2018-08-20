@@ -14,12 +14,25 @@
   .userinfo-nickname {
     color: #aaa;
   }
+
+  .helloArea{
+    align-self:left;
+    margin-left:10px;
+  }
+  .helloArea navigator{
+    display: block;
+
+  }
 </style>
 <template>
   <view class="container">
     <view class="userinfo" @tap="handleViewTap">
       <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
       <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
+    </view>
+
+    <view class="helloArea">
+      <navigator url="./hello">跳转页面</navigator>
     </view>
 
     <panel>
@@ -78,6 +91,11 @@
 </template>
 
 <script>
+  /**
+   * @desc 页面组件。
+          注意，methods中的方法只能用于bind和catch中，不可作为自定义方法调用。
+            自定义方法直接写成盒methods同级。
+   */
   import wepy from 'wepy'
   import Panel from '@/components/panel' // alias example
   import Counter from 'counter' // alias example
