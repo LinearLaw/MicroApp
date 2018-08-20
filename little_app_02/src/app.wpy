@@ -75,5 +75,9 @@ export default class extends wepy.app {
       }
     })
   }
+
+  showTestInfo(){
+    console.log("plus:"+new Date().getTime());
+  }
 }
 </script>

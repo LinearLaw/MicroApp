@@ -1,15 +1,26 @@
 <template>
-    <view class="hello"> 
+    <view class="hello">
         <view class="viewItem">
-            <view class="title" slot="title">1.1、事件绑定</view>
+            <view class="title">1.1、事件绑定</view>
             <button class="event" @tap="tapEvent('bubble')"> 冒泡tap事件，bindtap——>@tap </button>
             <button @tap.stop="tapEvent('cancle bubble')"> 阻止冒泡的tap，catchtap——>@tap.stop </button>
         </view>
         <view class="viewItem">
-            <view class="title" slot="title">1.2、数据绑定</view>
-            <text wx:if="{{ notice }}" class="noticeInfo">提示语</text>
+            <view class="title">1.2、数据绑定</view>
             <button @tap="switchNotice">Toggle</button>
+            <text wx:if="{{ notice }}" class="noticeInfo">提示语</text>
         </view>
+
+        <view class="viewItem">
+            <view class="title">2.1、列表渲染</view>
+            <text class="noticeInfo"> 列表循环，repeat需要指定for循环，\n 需指定key，index和item三个值 </text>
+            <repeat for="{{ arrData }}" key="_in" index="_in" item="_va">
+              <view class="circleText">
+                {{ _va.acc }} + {{ _va.basa }}
+              </view>
+            </repeat>
+        </view>
+
     </view>
 
 </template>
@@ -31,17 +42,24 @@
 
      */
     import wepy from "wepy";
-
     export default class Hello extends wepy.page{
         config = {
             navigationBarTitleText: 'Hello world'
         }
+        data = {
+            notice:true,
+            arrData:[
+              { acc:"1234",basa:"5678" },
+              { acc:"3463",basa:"5608908978" },
+              { acc:"12375474",basa:"9789" },
+              { acc:"98-8967",basa:"89056" },
+              { acc:"5696",basa:"0674" }
+            ]
+        }
         components = {
 
         }
-        data = {
-            notice:true
-        }
+
         /**
          * @desc methods 里面只放原生事件触发的函数，最后一个参数为事件对象，
                 通过事件对象，可以访问到触发事件的DOM元素。
@@ -52,6 +70,8 @@
             },
             switchNotice(){
                 this.notice = !this.notice;
+                //访问app.wpy的全局方法，使用this.$parent
+                this.$parent.showTestInfo();
             }
         }
         /**
@@ -62,24 +82,24 @@
         }
     }
 </script>
-
 <style lang="less">
     .hello{
         padding:10px;
     }
     .viewItem{
         font-size:15px;
-    }
-    .viewItem button{
-        font-size:14px;
-    }
-    .viewItem button{
-        margin-top:10px;
-    }
-    .viewItem .noticeInfo{
-        font-size:14px;
-        color:#ff4300;
+        button{
+            font-size:14px;
+            margin-top:10px;
+        }
+        .noticeInfo{
+            font-size:14px;
+            color:#ff4300;
+        }
+        .circleText{
+            font-size:14px;
+            color:green;
+        }
     }
 
 </style>
-
