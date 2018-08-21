@@ -45,8 +45,12 @@
             <ChildComponent3></ChildComponent3>
 
             <view class="title">3.4、跨页面通信</view>
-            <navigator url="">点我到其他页面去</navigator>
+            <navigator url="./cross">点我到其他页面去</navigator>
+        </view>
 
+        <view class="viewItem">
+          <view class="title">4、tab栏</view>
+          <Tabs></Tabs>
         </view>
 
     </view>
@@ -73,6 +77,7 @@
     import ChildComponent1 from "../components/helloComponent/childComponent_1";
     import ChildComponent2 from "../components/helloComponent/childComponent_2";
     import ChildComponent3 from "../components/helloComponent/childComponent_3";
+    import Tabs from "../components/helloComponent/tab";
     export default class Hello extends wepy.page{
         config = {
             navigationBarTitleText: 'Hello world'
@@ -92,7 +97,12 @@
         components = {
           ChildComponent1,
           ChildComponent2,
-          ChildComponent3
+          ChildComponent3,
+          Tabs
+        }
+
+        onLoad(){
+          console.log(this);
         }
 
         /**
@@ -119,7 +129,8 @@
           },
           //广播到所有子组件
           'crossUpdate':(data)=>{
-             this.$broadcast("updateRandomData",data);
+            this.$broadcast("updateRandomData",data);
+            this.$parent.globalData.crossPageData.randomNum = data;
           }
         }
     }

@@ -27,7 +27,8 @@ export default class extends wepy.app {
   config = {
     pages: [
       'pages/index',
-      'pages/hello'
+      'pages/hello',
+      'pages/cross'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -71,7 +72,6 @@ export default class extends wepy.app {
     }
     wepy.getUserInfo({
       success (res) {
-        console.log(res);
         that.globalData.userInfo = res.userInfo
         cb && cb(res.userInfo)
       }

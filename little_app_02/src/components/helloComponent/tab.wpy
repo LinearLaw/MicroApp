@@ -1,0 +1,63 @@
+<template lang="html">
+  <view class="scrollArea">
+    <scroll-view scroll-x="true">
+      <view class="tab {{curTabIndex=='0'?'active':''}}" @tap="switchNav(0)">Tab0</view>
+      <view class="tab {{curTabIndex=='1'?'active':''}}" @tap="switchNav(1)">Tab1</view>
+      <view class="tab {{curTabIndex=='2'?'active':''}}" @tap="switchNav(2)">Tab2</view>
+    </scroll-view>
+    <swiper @change="switchSwiper" current="{{curTabIndex}}">
+      <swiper-item>
+        index-1
+      </swiper-item>
+      <swiper-item>
+        index-2
+      </swiper-item>
+      <swiper-item>
+        index-3
+      </swiper-item>
+    </swiper>
+
+  </view>
+</template>
+
+<script>
+  import wepy from "wepy";
+  /**
+   * [data description] tab栏组件
+   *        使用scroll-view和swiper配合，达到绑定tab页签和内容区域的效果。
+   *        scroll-view添加tap事件点击，
+   *        swiper添加change事件左右滑动。
+   *          两者改变同一个index值，就达到了绑定的效果
+   */
+  export default class Tabs extends wepy.component {
+      data = {
+        curTabIndex:0
+      }
+      methods = {
+        switchNav(i,$event){
+          if(i == this.curTabIndex){
+            return;
+          }else{
+            this.curTabIndex = i;
+          }
+        },
+        switchSwiper($event){
+          //访问当前元素的current属性，使用$event.detail.current
+          this.curTabIndex = $event.detail.current;
+        }
+      }
+      events = {
+
+      }
+  }
+</script>
+
+<style lang="less">
+.tab{
+  display:inline-block;
+  padding:10px;
+  &.active{
+    border-bottom:4px solid #6897FF;
+  }
+}
+</style>

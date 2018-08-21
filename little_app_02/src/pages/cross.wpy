@@ -1,10 +1,26 @@
-<template lang="html">
-
+<template>
+  <view>Cross</view>
+  <view>{{ num }}</view>
 </template>
 
 <script>
-export default {
-}
+  import wepy from "wepy";
+  export default class Cross extends wepy.page {
+    config = {  }
+    components = {  }
+    data = {
+      num:1
+    }
+    onLoad(){
+      this.num = this.$parent.globalData.crossPageData.randomNum;
+    }
+    methods = {
+
+    }
+    events = {
+
+    }
+  }
 </script>
 
 <style lang="css">
