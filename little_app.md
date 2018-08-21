@@ -152,3 +152,43 @@
     app.wxss
         定义在app.wxss中的样式即为全局样式，其余为局部样式。
         局部样式只作用于当前页面。
+
+#   微信原生能力
+
+    1、登录
+        wx.login({
+            success(res){
+                //res：{  errMsg:"调用结果说明", code:"用户登录凭证"  }
+            },
+            fail(err){ console.log(err); }
+        })
+
+        wx.login调用成功后，
+        （1）code需要回传给开发者服务器，开发者服务器接收后，请求微信服务器；
+
+        （2）微信服务器得到code的值，向开发者服务器返回openid和session_key；
+            openid:用户唯一标识；session_key，会话密钥；
+
+        （3）开发者服务器拿到了openid和session_key，最好不要将其作为signal回传给前端
+            做法是：后端自己生成一个自定义的id字段，来与openid和session_key关联，
+            全部存到后端服务器中，这个自定义的id回传给前端，
+            前端则存到cookie或storage中。
+
+        （4）之后前端请求后台接口时，都携带这个自定义的id值，
+            后端可通过此来查询到该用户对应的openid和session_key
+
+    2、获取用户信息
+        <button open-type="getUserInfo"></button>
+        需要主动引导
+        wx.getUserInfo({
+            withCredentials:true/false,//是否携带登录状态
+            success(res){
+                /** res:{
+                    userInfo:{},   //用户信息对象，头像，昵称等
+                    rawData:"{}",  //不包括敏感信息的原始数据字符串
+                    signature:"",  //用户加密信息
+                    encryptedData:"", //完整用户数据的加密后的字符串
+                    iv:"" //加密算法的初始向量
+                } */
+            }
+        })
