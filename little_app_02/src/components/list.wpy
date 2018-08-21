@@ -24,7 +24,10 @@
   export default class List extends wepy.component {
     data = {
       list: [
-        {  id: '1',title: 'loading' }
+        {
+          id: '0',
+          title: 'loading'
+        }
       ]
     }
 

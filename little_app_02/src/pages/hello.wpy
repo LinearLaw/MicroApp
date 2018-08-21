@@ -1,5 +1,7 @@
 <template>
     <view class="hello">
+
+        <!-- 1、事件绑定 -->
         <view class="viewItem">
             <view class="title">1.1、事件绑定</view>
             <button class="event" @tap="tapEvent('bubble')"> 冒泡tap事件，bindtap——>@tap </button>
@@ -8,17 +10,34 @@
         <view class="viewItem">
             <view class="title">1.2、数据绑定</view>
             <button @tap="switchNotice">Toggle</button>
-            <text wx:if="{{ notice }}" class="noticeInfo">提示语</text>
+            <view>提示：<text wx:if="{{ notice }}" class="noticeInfo">摩根大通，摩根史丹利</text></view>
         </view>
 
+        <!-- 2、列表渲染、条件渲染 -->
         <view class="viewItem">
             <view class="title">2.1、列表渲染</view>
-            <text class="noticeInfo"> 列表循环，repeat需要指定for循环，\n 需指定key，index和item三个值 </text>
+            <text class="noticeInfo"> 第一种形式：列表循环，repeat需要指定for循环，\n 需指定key，index和item三个值 </text>
             <repeat for="{{ arrData }}" key="_in" index="_in" item="_va">
               <view class="circleText">
                 {{ _va.acc }} + {{ _va.basa }}
               </view>
             </repeat>
+            <text class="noticeInfo"> 第二种形式：列表循环 + 条件渲染，\n repeat需要指定for循环，\n wx:if来决定每一项是否显示 </text>
+            <repeat for="{{ arrData }}" key="_in" index="_in" item="_va">
+              <view class="circleText" wx:if="{{ _va.acc>2000?true:false }}">
+                {{ _va.acc }} + {{ _va.basa }}
+              </view>
+            </repeat>
+        </view>
+
+        <!-- 3、组件通信 -->
+        <view class="viewItem">
+            <view class="title">3.1、子组件向父组件传值</view>
+            <view class="threeCom">现在的时间：{{timeNow}}</view>
+            <ChildComponent1 @updateDate="updateDate"></ChildComponent1>
+            <view class="title">3.2、父组件向子组件传值</view>
+            <view class="threeCom">现在的时间：{{timeNow}}</view>
+            <ChildComponent1 :parentData.sync="parentData"></ChildComponent1>
         </view>
 
     </view>
@@ -42,6 +61,8 @@
 
      */
     import wepy from "wepy";
+
+    import ChildComponent1 from "../components/helloComponent/childComponent_1";
     export default class Hello extends wepy.page{
         config = {
             navigationBarTitleText: 'Hello world'
@@ -49,15 +70,18 @@
         data = {
             notice:true,
             arrData:[
-              { acc:"1234",basa:"5678" },
+              { acc:"1234",basa:"56781111" },
               { acc:"3463",basa:"5608908978" },
               { acc:"12375474",basa:"9789" },
               { acc:"98-8967",basa:"89056" },
               { acc:"5696",basa:"0674" }
-            ]
+            ],
+            timeNow:new Date(),
+            parentData:"ojbk"
+
         }
         components = {
-
+          ChildComponent1
         }
 
         /**
@@ -78,7 +102,9 @@
          * @desc 与methods不同的是，events主要存放的是$broadcast、$emit、$invoke等事件的函数。
          */
         events = {
-
+          'updateDate':(time,$event)=>{
+            this.timeNow = time;
+          }
         }
     }
 </script>
@@ -92,6 +118,10 @@
             font-size:14px;
             margin-top:10px;
         }
+        .title{
+          font-weight:600;
+          margin:10px 0;
+        }
         .noticeInfo{
             font-size:14px;
             color:#ff4300;
@@ -99,6 +129,10 @@
         .circleText{
             font-size:14px;
             color:green;
+        }
+        .threeCom{
+          font-size:14px;
+          color:skyblue;
         }
     }
 

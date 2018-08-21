@@ -1,0 +1,30 @@
+<template lang="html">
+  <button type="button" name="button" @tap="getTimeNow">更新当前时间</button>
+  <view>父组件传来的值：{{ parentData }}</view>
+</template>
+
+<script>
+
+import wepy from "wepy";
+export default class ChildComponent_1 extends wepy.component {
+    data={
+
+    }
+    props={
+      parentData:{
+        type:String,
+        default:"noticeInfo"
+      }
+    }
+    methods={
+      getTimeNow(){
+        var time = new Date();
+        this.$emit("updateDate",time);
+      }
+    }
+}
+</script>
+
+<style lang="less">
+
+</style>
