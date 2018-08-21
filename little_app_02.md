@@ -123,3 +123,81 @@
                     }
                 }
             }
+
+    生命周期
+        wepy总共有三种组件类型
+            小程序入口 app.wpy，定义：
+                export default class extends wepy.app{  }
+
+            页面入口 page.wpy，定义：
+                export default class PageName extends wepy.page{   }
+
+            组件 com.wpy，定义：
+                export default class ComponentName extends wepy.component {  }
+
+            
+        （1）app.wpy
+            小程序的入口文件只有一个，就是app.wpy
+            export default class extends wepy.app {
+                config = {
+                    pages:[
+
+                    ],
+                    window:{
+
+                    }
+                }
+                constructor(){
+                    super();
+                    this.use("requestfix");
+                }
+                onLaunch(){
+
+                }
+
+                //其他的自定义方法、自定义变量都可在此定义，全局可用。
+                //页面访问到该对象，使用this.$parent
+                //组件访问到该对象，使用wepy.$instance
+            }
+
+        （2）page.wpy
+            每一个页面都需要注册到app.wpy中config的page属性中，不注册将没有效果。
+            export default class Page_1 extends wepy.page {
+                data = {
+                    //当前组件使用的状态
+                }
+                components = {
+                    //引用组件
+                }
+                
+                //继承属性
+                mixins = [ mixin_JS_file ]
+                
+                //计算属性
+                computed = {
+                    a(){
+                        return "b"
+                    }
+                }
+                //监听器
+                watch = {
+                    num(newValue,oldValue){
+                        //num和data中的num需要同名，当num改变时，触发该函数
+                    }
+                }
+                
+                methods = {
+                    //默认wxml事件触发后，执行的回调函数
+                }
+                
+                events = {
+                    //$emit、$broadcast、$invoke触发后的执行事件
+                }
+
+                onLoad(){
+                    //组件和页面都已经加载后的回调函数
+                }
+                onShow(){
+                    //页面显示后的回调函数，此时组件不一定加载
+                }
+            }

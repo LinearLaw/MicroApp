@@ -21,7 +21,7 @@
  */
 import wepy from 'wepy'
 import 'wepy-async-function'
-
+import state from "./store/state.js";
 
 export default class extends wepy.app {
   config = {
@@ -38,7 +38,8 @@ export default class extends wepy.app {
   }
 
   globalData = {
-    userInfo: null
+    userInfo: null,
+    ...state
   }
 
   constructor () {

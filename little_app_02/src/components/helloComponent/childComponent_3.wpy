@@ -1,0 +1,47 @@
+<template lang="html">
+  <button type="button" name="button" @tap="changeNum">组件3</button>
+  <ChildComponent4></ChildComponent4>
+</template>
+
+<script>
+
+import wepy from "wepy";
+import helloMixin from "../../mixins/helloMixin"
+import ChildComponent4 from "./childComponent_4";
+export default class ChildComponent_3 extends wepy.component {
+    data={
+      rn:1
+    }
+    props={
+
+    }
+    components = {
+      ChildComponent4
+    }
+    mixins = [ helloMixin ];
+    computed = {
+
+    }
+    onLoad(){
+      //在component中要访问app.wpy的方法，需要使用wepy.$instance
+      console.log("456",wepy.$instance.globalData);
+    }
+    methods={
+      changeNum(){
+        var n = Math.random();
+        //向上级提交
+        this.$emit("crossUpdate",n);
+      }
+    }
+    events={
+      //接收广播
+      'updateRandomData':(data)=>{
+        this.rn = data
+      }
+    }
+}
+</script>
+
+<style lang="less">
+
+</style>

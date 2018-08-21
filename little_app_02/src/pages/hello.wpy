@@ -22,7 +22,7 @@
                 {{ _va.acc }} + {{ _va.basa }}
               </view>
             </repeat>
-            <text class="noticeInfo"> 第二种形式：列表循环 + 条件渲染，\n repeat需要指定for循环，\n wx:if来决定每一项是否显示 </text>
+            <text class="noticeInfo"> 第二种形式：列表循环 + 条件渲染，\n wx:if来决定每一项是否显示 </text>
             <repeat for="{{ arrData }}" key="_in" index="_in" item="_va">
               <view class="circleText" wx:if="{{ _va.acc>2000?true:false }}">
                 {{ _va.acc }} + {{ _va.basa }}
@@ -35,9 +35,18 @@
             <view class="title">3.1、子组件向父组件传值</view>
             <view class="threeCom">现在的时间：{{timeNow}}</view>
             <ChildComponent1 @updateDate="updateDate"></ChildComponent1>
+
             <view class="title">3.2、父组件向子组件传值</view>
             <view class="threeCom">现在的时间：{{timeNow}}</view>
             <ChildComponent1 :parentData.sync="parentData"></ChildComponent1>
+
+            <view class="title">3.3、跨组件通信</view>
+            <ChildComponent2></ChildComponent2>
+            <ChildComponent3></ChildComponent3>
+
+            <view class="title">3.4、跨页面通信</view>
+            <navigator url="">点我到其他页面去</navigator>
+
         </view>
 
     </view>
@@ -58,11 +67,12 @@
             6、Ajax请求
             7、请求拦截器
             8、原生能力调取
-
      */
     import wepy from "wepy";
 
     import ChildComponent1 from "../components/helloComponent/childComponent_1";
+    import ChildComponent2 from "../components/helloComponent/childComponent_2";
+    import ChildComponent3 from "../components/helloComponent/childComponent_3";
     export default class Hello extends wepy.page{
         config = {
             navigationBarTitleText: 'Hello world'
@@ -78,10 +88,11 @@
             ],
             timeNow:new Date(),
             parentData:"ojbk"
-
         }
         components = {
-          ChildComponent1
+          ChildComponent1,
+          ChildComponent2,
+          ChildComponent3
         }
 
         /**
@@ -104,6 +115,11 @@
         events = {
           'updateDate':(time,$event)=>{
             this.timeNow = time;
+            this.parentData = Math.random();
+          },
+          //广播到所有子组件
+          'crossUpdate':(data)=>{
+             this.$broadcast("updateRandomData",data);
           }
         }
     }

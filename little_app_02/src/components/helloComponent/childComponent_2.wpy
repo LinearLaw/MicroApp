@@ -1,0 +1,42 @@
+<template lang="html">
+  <button type="button" name="button" @tap="changeNum">组件2</button>
+  <view>跨组件通信体2：  {{rn}}</view>
+</template>
+
+<script>
+
+import wepy from "wepy";
+import helloMixin from "../../mixins/helloMixin"
+export default class ChildComponent_2 extends wepy.component {
+    data={
+      rn:1
+    }
+    props={
+
+    }
+    mixins = [ helloMixin ];
+    computed = {
+
+    }
+    onLoad(){
+      console.log("123",wepy.$instance.globalData);
+    }
+    methods={
+      changeNum(){
+        var n = Math.random();
+        //向上级提交
+        this.$emit("crossUpdate",n);
+      }
+    }
+    events={
+      //接收广播
+      'updateRandomData':(data)=>{
+        this.rn = data
+      }
+    }
+}
+</script>
+
+<style lang="less">
+
+</style>

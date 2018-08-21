@@ -1,0 +1,37 @@
+<template lang="html">
+  <view>跨组件通信体4：  {{rn}}</view>
+</template>
+
+<script>
+
+import wepy from "wepy";
+import helloMixin from "../../mixins/helloMixin"
+export default class ChildComponent_4 extends wepy.component {
+    data={
+      rn:1
+    }
+    props={
+
+    }
+    mixins = [ helloMixin ];
+    computed = {
+
+    }
+    onLoad(){
+
+    }
+    methods={
+
+    }
+    events={
+      //接收广播
+      'updateRandomData':(data)=>{
+        this.rn = data
+      }
+    }
+}
+</script>
+
+<style lang="less">
+
+</style>
