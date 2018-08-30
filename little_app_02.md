@@ -206,6 +206,28 @@
             组件由页面进行引用，与页面不同的是，组件不需要写入app.wpy。
             但是需要引入到page.wpy，在components中指定。
 
+            export default class Com extends wepy.component {
+                components = {}
+
+                data = {}
+
+                methods = {}
+                events = {}
+            }
+
+#   wepy数据传输
+    
+    1、组件通信
+        wepy虽然基于Vue，但是wepy的状态管理暂时没有vuex的实现，仅有redux的实现；
+        其实用redux也行，只不过过程比vuex繁琐些。
+        （1）、父 ——> 子
+        （2）、子 ——> 父
+        （3）、无直接关联组件A <——> 无直接关联组件B
+        （4）、跨页面通信
+
+    2、http请求
+        wepy.request({})
+
 #   wepy打包项目，自动切换url前缀
 
     1、定义配置文件
