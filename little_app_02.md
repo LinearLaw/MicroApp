@@ -206,4 +206,85 @@
             组件由页面进行引用，与页面不同的是，组件不需要写入app.wpy。
             但是需要引入到page.wpy，在components中指定。
 
-            
+#   wepy打包项目，自动切换url前缀
+
+    1、定义配置文件
+        src——config——index.js
+                    ——dev.js
+                    ——prod.js
+
+        index.js
+            import devConf from "./dev";
+            import prodConf from "./prod";
+            import {merge} from "lodash";
+
+            let config = {}; //配置文件对象，它将会被devConf或prodConf替换
+
+            let env = __NODE_ENV__;// 当前的项目环境
+
+            if(env === 'dev'){
+              merge(config,devConf);
+            }else if(env === 'production'){
+              merge(config,prodConf);
+            }
+
+            export default config;
+
+        dev.js
+            //定义dev环境下，需要用到的配置数据即可
+            export default {
+                serverHost:"http://127.0.0.1:8666"
+            }
+        
+        prod.js
+            //定义prod环境下，需要用到的配置数据即可
+            export default {
+                serverHost:"http://127.0.0.1:8123"
+            }
+
+    2、修改打包规则
+        wepy.config.js
+            在这里需要新增plugin，定义全局变量值，打包时全局变量赋不同值
+
+            compilers:{
+                ...,
+                babel:{
+                    ...,
+                    plugins:[
+                        'transform-class-properties',
+                        'transform-decorators-legacy',
+                        'transform-object-rest-spread',
+                        'transform-export-extensions',
+
+                        //加入如下这段
+                        ['global-define', {
+                          __NODE_ENV__:process.env.NODE_ENV, //规定全局变量
+                          __VERSION__:'1.0.0', //版本号
+                          __TITLE__:'global-define' //说明
+                        }]
+                    ]
+                }
+            }
+
+    3、定义命令
+        package.json
+
+            {
+                ...,
+                scripts:{
+                    ...,
+                    "dev":"cross-env NODE_ENV=dev wepy build --watch",
+                    "prod":"cross-env NODE_ENV=production wepy build --no-cache"
+                    ...,
+                }
+            }
+
+    搞定！
+
+
+
+
+
+
+
+

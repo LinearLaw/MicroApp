@@ -37,10 +37,16 @@ module.exports = {
         'transform-decorators-legacy',
         'transform-object-rest-spread',
         'transform-export-extensions',
+        ['global-define', {
+          __NODE_ENV__:process.env.NODE_ENV,
+          __VERSION__:'1.0.0',
+          __TITLE__:'global-define'
+        }]
       ]
     }
   },
   plugins: {
+
   },
   appConfig: {
     noPromiseAPI: ['createSelectorQuery']
