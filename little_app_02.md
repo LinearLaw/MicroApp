@@ -233,13 +233,13 @@
         dev.js
             //定义dev环境下，需要用到的配置数据即可
             export default {
-                serverHost:"http://127.0.0.1:8666"
+                url:"http://127.0.0.1:8666"
             }
         
         prod.js
             //定义prod环境下，需要用到的配置数据即可
             export default {
-                serverHost:"http://127.0.0.1:8123"
+                url:"http://127.0.0.1:8123"
             }
 
     2、修改打包规则
@@ -279,7 +279,11 @@
                 }
             }
 
-    搞定！
+    4、引用
+        在页面中直接引入config中的index.js即可
+        import __CONFIG__ from "../config/index.js";
+
+        __CONFIG__.url即为dev.js或prod.js中的配置变量。
 
 
 

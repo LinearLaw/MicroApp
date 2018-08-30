@@ -4,8 +4,8 @@
   "description": "A WePY project",
   "main": "dist/app.js",
   "scripts": {
-    "builddev": "wepy build --watch",
-    "buildapp": "cross-env NODE_ENV=production wepy build --no-cache",
+    "odev": "wepy build --watch",
+    "obuild": "cross-env NODE_ENV=production wepy build --no-cache",
     "dev": "cross-env NODE_ENV=dev wepy build --watch",
     "build": "cross-env NODE_ENV=production wepy build --no-cache",
     "dev:web": "wepy build --output web",
