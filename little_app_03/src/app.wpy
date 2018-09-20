@@ -7,12 +7,18 @@
   justify-content: space-between;
   box-sizing: border-box;
 }
+page, view, scroll-view, swiper, movable-area, cover-view, text, icon, rich-text,
+progress, button, checkbox-group, checkbox, form, input, label, picker,
+picker-view, radio-group, slider, switch, textarea, navigator, audio, image,
+video, live-player, live-pusher, open-data, web-view {
+    box-sizing: border-box;
+}
+
 </style>
 
 <script>
 import wepy from 'wepy'
 import 'wepy-async-function'
-
 
 export default class extends wepy.app {
   config = {
@@ -62,6 +68,9 @@ export default class extends wepy.app {
       success (res) {
         that.globalData.userInfo = res.userInfo
         cb && cb(res.userInfo)
+      },
+      fail(res){
+        console.log(res);
       }
     })
   }

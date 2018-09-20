@@ -26,6 +26,16 @@
       <view class="title" slot="title">测试打包</view>
       <button @tap="showCfg">测试按钮</button>
     </panel>
+    <panel>
+      <view class="title" slot="title">获取用户信息</view>
+      <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button>
+    </panel>
+    <panel>
+      <camera device-position="back" flash="off" binderror="error" style="width: 100%; height: 300px;"></camera>
+      <view class="title" slot="title">拍照</view>
+      <button @tap="getPhoto">调取摄像头</button>
+      <image class="" src="{{ camaraPics }}" />
+    </panel>
 
   </view>
 </template>
@@ -46,7 +56,9 @@
 
     data = {
       userInfo: {
-        nickName: '加载中...'
+        nickName: '加载中...',
+        camaraPics:"",
+        ctx:null
       },
       count: 0,
     }
@@ -58,6 +70,35 @@
     methods = {
       showCfg(){
         console.log(_config);
+      },
+      getPhoto(){
+        var that = this;
+        this.ctx.takePhoto({
+          quality:"high",
+          success:(res)=>{
+            console.log(res);
+            this.setData({camaraPics:res.tempImagePath});
+          },
+          fail: () => {
+            wx.showModal({
+              title: '警告',
+              content: '您点击了拒绝授权,将无法正常显示个人信息,点击确定重新获取授权。',
+              success: function (res) {
+                if (res.confirm) {
+                  wx.openSetting({
+                    success: (res) => {
+                      if (res.authSetting["scope.camera"]) {////如果用户重新同意了授权登录
+                        that.ctx = wx.createCameraContext();
+                      }
+                    }, fail: function (res) {
+
+                    }
+                  })
+                }
+              }
+            })
+          }
+        })
       }
     }
 
@@ -67,9 +108,15 @@
         console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
       }
     }
+    bindGetUserInfo (e) {
+        console.log(e.detail.userInfo);
+        this.userInfo.nickName = e.detail.userInfo.nickName;
+        this.userInfo.avatarUrl = e.detail.userInfo.avatarUrl;
+    }
 
     onLoad() {
-
+      this.ctx =  wepy.createCameraContext();
+      console.log(this.ctx);
     }
   }
 </script>
