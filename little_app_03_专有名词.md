@@ -61,12 +61,121 @@
         })
 	Tips：录制视频，需要scope.camera；
 		录音，需要scope.record；
+
+4、
 	
 ```
 
+## 调取摄像头
+
+调取摄像头很特别。
+
+	摄像头拍摄的界面，需要单独的一个页面进行。
+	使用camera标签来标识摄像头拍摄到的图像的位置，在camera中无法插入其他的wxml元素。
+		同时，拍照完成后，camera会继续采景。
+	也就是说：
+		1、进入到这个页面时，调取wx.createCamera创建摄像头对象，向用户申请授权摄像头的使用。
+		2、若被用户拒绝，需要提示用户，重新发起请求。
+		3、camera的拍摄按钮，独立于摄像头视野的范围之外
+		4、拍摄成功后，需要跳转到一个独立的页面展示拍摄到的图片。
+	
 
 
 
+## 	常用API
+
+```javascript
+1、触发原生能力方式
+	后续的更新中，微信将会逐渐废弃一些直接调用原生能力的方法，而推荐使用button实现。
+    button加上open-type，后接需要调取的原生能力，然后绑定bind+原生能力名，
+	回调函数即为返回值。
+	
+	（1）wx.getUserInfo()
+		获取用户信息，请求授权
+		<button open-type="getUserInfo" bindgetuserinfo="handler">打开授权</button>
+
+		...
+        handler: function(e){
+            if (e.detail.authSetting["scope.userInfo"]){//如果授权了个人信息，就会为true
+                
+            }
+        }
+		...
+        
+	（2）wx.openSetting()
+		打开授权界面，提示用户自己去授权
+		<button open-type="openSetting" bindopensetting="handler">打开授权</button>
+
+	
+        handler: function(e){
+            if (e.detail.authSetting["scope.camera"]){//如果有授权，就会为true
+                this.setData({
+                    showFlag: true
+                })
+            }  
+        }
+2、工具
+	（1）重定向
+   		关闭当前页面的跳转，不会进堆栈：
+            wx.redirectTo({
+                url:"", //page的url
+                success:(res)=>{
+
+                },
+                fail:(res)=>{
+
+                }
+            })
+		保留当前页面的跳转，会进堆栈：
+        	wx.navigateTo({
+                url:"", //page的url
+                success:(res)=>{
+
+                },
+                fail:(res)=>{
+
+                }
+            })
+		返回上一个页面
+        	wx.navigateBack({
+                delta:"", //返回的页面数，是个number，设置太大会返回到首页
+                success:(res)=>{
+
+                },
+                fail:(res)=>{
+
+                }
+            })
+	(2)界面工具
+		模态框
+            wx.showModal({
+                title:"",
+                content:"",
+                showCancel:true, 
+                success:function(){
+                    
+                },
+                fail:function(){
+                    
+                }
+            })
+		提示框
+            wx.showToast({
+				title:""
+            });
+
+            wx.hideToast()
+		
+		加载提示
+            wx.showLoading({
+                title:"",
+                mask:false,		//是否显示透明蒙层，防止触摸穿透
+                success:function(){}
+            })
+			wx.hideLoading()
+
+
+```
 
 
 

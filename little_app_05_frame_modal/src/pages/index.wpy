@@ -1,0 +1,81 @@
+<style lang="less">
+  .userinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .userinfo-avatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+  }
+
+  .userinfo-nickname {
+    color: #aaa;
+  }
+</style>
+<template>
+  <view class="container">
+
+    <panel>
+      <view class="title" slot="title">获取用户信息</view>
+      <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button>
+    </panel>
+
+  </view>
+</template>
+
+
+<script>
+  import wepy from 'wepy'
+  import Panel from '@/components/panel' // alias example
+  import _config from "../config/index.js"
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: 'test'
+    }
+    components = {
+      panel: Panel,
+    }
+
+    mixins = []
+
+    data = {
+      userInfo: {
+        nickName: '加载中...',
+        camaraPics:"",
+        ctx:null
+      },
+      count: 0,
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+      showCfg(){
+        console.log(_config);
+      },
+      
+    }
+
+    events = {
+      'index-emit': (...args) => {
+        let $event = args[args.length - 1]
+        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+      }
+    }
+    bindGetUserInfo (e) {
+        console.log(e.detail.userInfo);
+        this.userInfo.nickName = e.detail.userInfo.nickName;
+        this.userInfo.avatarUrl = e.detail.userInfo.avatarUrl;
+    }
+
+    onLoad() {
+      this.ctx =  wepy.createCameraContext();
+      console.log(this.ctx);
+    }
+  }
+</script>
