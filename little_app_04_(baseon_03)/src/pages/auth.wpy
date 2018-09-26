@@ -1,0 +1,58 @@
+<style lang="less" scoped>
+
+</style>
+
+
+<template>
+    <view class="container">
+        <view wx:if="{{noAuth}}">
+            <panel class="offer__auth">
+                <view class="title text__wearning view__box" slot="title">您需要对摄像头的使用进行授权，以便于拍摄面签视频</view>
+                <button class="btn btn__wearning" open-type="openSetting" bindopensetting="bindOpenSetting">点击此处，进行授权</button>
+            </panel>
+        </view>
+    </view>
+</template>
+
+<script>
+    import wepy from "wepy";
+    import Panel from "@/components/panel";
+    import _config from "../config/index.js"
+    export default class Auth extends wepy.page{
+        data = {
+            noAuth: false
+        }
+        onLoad(){
+            let _this = this;
+            wx.showLoading( {
+                title:"获取授权状态中..."
+            } )
+            wx.getSetting({
+              success:(res)=>{
+                  if(!res.authSetting["scope.camera"] || !res.authSetting["scope.record"] ){
+                      _this.noAuth = true;
+                      _this.$apply();
+                  }else{
+                      wx.redirectTo({url:"contract-record"});
+                  }
+              },
+              complete:()=>{
+                  wx.hideLoading();
+              }
+          })
+        }
+        bindOpenSetting(e){
+            console.log(e.detail);
+            if (!!e.detail.authSetting["scope.camera"] && !!e.detail.authSetting["scope.record"]){
+                //用户按了允许授权按钮
+                this.noAuth = false;
+                wx.redirectTo({url:"contract-record"});
+            } else {
+                //用户按了拒绝按钮
+                this.noAuth = true;
+            }
+            this.$apply();
+        }
+    }
+
+</script>

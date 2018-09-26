@@ -1,28 +1,41 @@
-<style lang="less">
-  .userinfo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+<style lang="less" scoped>
+  .radio-group{
+    text-align: left;
   }
 
-  .userinfo-avatar {
-    width: 80rpx;
-    height: 80rpx;
-    border-radius: 50%;
+  checkbox,text{
+    vertical-align: middle;
   }
-
-  .userinfo-nickname {
-    color: #aaa;
+  .offer__auth{
+    border-radius:10px;
+  }
+  .title{
+    margin-bottom:10px;
+    font-size:16px;
+  }
+  .default__auth__btn{
+    border:0;
   }
 </style>
 <template>
   <view class="container">
 
-    <panel>
-      <view class="title" slot="title">获取用户信息</view>
-      <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button>
+    <view class="view__box">
+      <label for="check__box">
+        <checkbox-group class="radio-group" @change="checkboxChange">
+          <checkbox id="check__box" value="{{true}}"/>
+          <text>{{confirmContract.value}}</text>
+        </checkbox-group>
+      </label>
+    </view>
+    <view class="view__box">
+      <button class="btn btn__primary" @tap="commitInfo"> 提交 </button>
+    </view>
+    <panel class="default__auth__btn" >
+      <view slot="title"></view>
+      <button class="btn" open-type="openSetting">查看授权状态</button>
     </panel>
-
+    <camera device-position="front" flash="off" binderror="error" style="width: 100%; height: 300px;margin-top:10px;display:none;"></camera>
   </view>
 </template>
 
@@ -30,6 +43,7 @@
 <script>
   import wepy from 'wepy'
   import Panel from '@/components/panel' // alias example
+  import utils from "../config/utils.js";
   import _config from "../config/index.js"
   export default class Index extends wepy.page {
     config = {
@@ -42,12 +56,11 @@
     mixins = []
 
     data = {
-      userInfo: {
-        nickName: '加载中...',
-        camaraPics:"",
-        ctx:null
+      confirmContract:{
+        signal:false,
+        value:"同意协议",
+        bool:false
       },
-      count: 0,
     }
 
     computed = {
@@ -55,27 +68,26 @@
     }
 
     methods = {
-      showCfg(){
-        console.log(_config);
-      },
-      
-    }
-
-    events = {
-      'index-emit': (...args) => {
-        let $event = args[args.length - 1]
-        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+      /* tap commit button */
+      commitInfo(){
+        var _this = this;
+        if(this.confirmContract.bool == "true"){
+          wx.navigateTo({url:"auth"});
+        }else{
+          utils.toast("请点击同意协议");
+        }
       }
     }
-    bindGetUserInfo (e) {
-        console.log(e.detail.userInfo);
-        this.userInfo.nickName = e.detail.userInfo.nickName;
-        this.userInfo.avatarUrl = e.detail.userInfo.avatarUrl;
+    checkboxChange(e){
+      this.confirmContract.bool = e.detail.value[0];
+    }
+    events = {
+      
     }
 
     onLoad() {
       this.ctx =  wepy.createCameraContext();
-      console.log(this.ctx);
+      console.log("123",this.ctx);
     }
   }
 </script>
