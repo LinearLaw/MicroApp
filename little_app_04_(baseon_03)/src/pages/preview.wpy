@@ -12,6 +12,7 @@
         <view class="operate__area">
             <button class="btn btn__primary" @tap="commitVideo"> 提交视频 </button>
             <button class="btn btn-promary" @tap="cancelCommit"> 取消 </button>
+            <button class="btn btn-promary" @tap="reRecord"> 重新录制 </button>
         </view>
         <view>
             当前进度{{progress}}
@@ -39,14 +40,18 @@
         }
         methods = {
             commitVideo(){
-                console.log(this.tempVideoObj);
+                console.log("obj",this.tempVideoObj);
                 const _this = this;
                 const uploadTask = wx.uploadFile({
-                    url: 'http://example.weixin.qq.com/upload', //仅为示例，非真实的接口地址
+                    url: 'http://172.31.7.5:1234/upload', //仅为示例，非真实的接口地址
                     filePath: _this.tempVideoObj.tempVideoPath,
                     name: 'file',
                     success (res){
-                        
+                        console.log("success",res);
+                        utils.toast("上传成功");
+                    },
+                    fail(res){
+                        console.log("fail",res)
                     }
                 })
 
@@ -57,6 +62,12 @@
                     _this.progress = res.progress;
                     _this.$apply();
                 })
+            },
+            cancelCommit(){
+                wx.redirectTo({url:"index"});
+            },
+            reRecord(){
+                wx.redirectTo({url:"auth"});
             }
         }
     }
