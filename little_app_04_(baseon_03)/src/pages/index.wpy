@@ -47,7 +47,7 @@
   import _config from "../config/index.js"
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: 'test'
+      navigationBarTitleText: 'Contract'
     }
     components = {
       panel: Panel,

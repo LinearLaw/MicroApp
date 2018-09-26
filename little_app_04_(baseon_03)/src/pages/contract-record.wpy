@@ -53,7 +53,7 @@
                 banStart:false,
                 banStop:true
             },
-            time:30,
+            time:0,
             step:""
         }
         onLoad(){
@@ -101,10 +101,11 @@
         startTime(){
             let _this = this;
             this.step = setInterval(()=>{
+                
+                _this.time ++;
                 if(_this.time<=0){
                     clearInterval(_this.step);
                 }
-                _this.time --;
                 _this.$apply();
             },1000)
         }
