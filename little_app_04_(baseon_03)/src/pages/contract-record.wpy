@@ -26,7 +26,6 @@
         
         <camera device-position="front" flash="off" binderror="error" style="width: 100%; height: 400px;margin:10px 0;border:1px solid #e2e2e1;" wx:if="{{openCamera}}">
             <cover-view class="number__area">
-                
                 <cover-view class="red__round"></cover-view>
                 <cover-view class="record__time">{{time}}</cover-view>
             </cover-view>
