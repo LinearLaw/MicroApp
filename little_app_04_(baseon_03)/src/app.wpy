@@ -44,7 +44,8 @@ export default class extends wepy.app {
       'pages/contract-record',
       'pages/auth',
       "pages/preview",
-      "pages/view-html"
+      "pages/view-html",
+      "pages/signature"
     ],
     window: {
       backgroundTextStyle: 'light',

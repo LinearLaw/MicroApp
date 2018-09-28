@@ -38,6 +38,11 @@
       <view slot="title"></view>
       <button class="btn" open-type="openSetting">查看授权状态</button>
     </panel>
+    <view class="view__box">
+      
+
+       <navigator url="/pages/signature" hover-class="navigator-hover"><button class="btn" >签名</button></navigator> 
+    </view>
     <camera device-position="front" flash="off" binderror="error" style="width: 100%; height: 300px;margin-top:10px;display:none;"></camera>
   </view>
 </template>
