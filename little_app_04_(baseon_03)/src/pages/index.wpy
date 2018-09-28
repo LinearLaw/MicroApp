@@ -19,7 +19,10 @@
 </style>
 <template>
   <view class="container">
-
+    
+    <view class="view__box">
+      <button class="btn btn__primary" @tap="viewContract"> 查看合同 </button>               
+    </view>
     <view class="view__box">
       <label for="check__box">
         <checkbox-group class="radio-group" @change="checkboxChange">
@@ -61,6 +64,7 @@
         value:"同意协议",
         bool:false
       },
+      url:""
     }
 
     computed = {
@@ -76,6 +80,11 @@
         }else{
           utils.toast("请点击同意协议");
         }
+      },
+      viewContract(){
+        // wx.navigateTo({url:"preview-pdf"});
+        let _this = this;
+        utils.viewDocument(this.url);
       }
     }
     checkboxChange(e){

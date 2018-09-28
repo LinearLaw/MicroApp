@@ -43,7 +43,8 @@ export default class extends wepy.app {
       'pages/index',
       'pages/contract-record',
       'pages/auth',
-      "pages/preview"
+      "pages/preview",
+      "pages/view-html"
     ],
     window: {
       backgroundTextStyle: 'light',

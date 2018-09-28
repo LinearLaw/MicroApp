@@ -49,6 +49,7 @@
                     success (res){
                         console.log("success",res);
                         utils.toast("上传成功");
+                        
                     },
                     fail(res){
                         console.log("fail",res)

@@ -1,0 +1,45 @@
+<style lang="less" scoped>
+  
+</style>
+<template>
+    <view class="container">
+        <web-view src="{{url}}"></web-view>
+    </view>
+</template>
+
+
+<script>
+  import wepy from 'wepy'
+  import Panel from '@/components/panel' // alias example
+  import utils from "../config/utils.js";
+  import _config from "../config/index.js"
+  export default class ViewHtml extends wepy.page {
+    config = {
+      navigationBarTitleText: 'PreviewPDF'
+    }
+    components = {
+      panel: Panel,
+    }
+
+    mixins = []
+
+    data = {
+      url:""
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+      
+    }
+    events = {
+      
+    }
+
+    onLoad() {
+
+    }
+  }
+</script>
