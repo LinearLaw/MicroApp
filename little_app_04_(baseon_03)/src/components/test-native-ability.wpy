@@ -1,0 +1,43 @@
+<template>
+    
+    <view class="view__box">
+        <view>测试原生能力</view>
+        <view>当前能力值：{{skillPoint}}</view>
+        <button class="btn" @tap="getSto">获取storage值</button>
+        <button class="btn" @tap="setSto">设置storage值</button>
+        <button class="btn" @tap="resetSto">重置storage值</button>
+    </view>
+
+</template>
+<script>
+    import wepy from "wepy"
+    import utils from "../config/utils"
+    export default class TestNative extends wepy.component{
+        data = {
+            skillPoint:0
+        }
+        methods = {
+            getSto(){
+                let d = utils.getStorage("num");
+                if(d){
+                    this.skillPoint = d;
+                }else{
+                    this.skillPoint = 0;
+                }
+            },
+            setSto(){
+                let d = this.skillPoint + 1;
+                utils.setStorage("num",d);
+            },
+            resetSto(){
+                wx.removeStorageSync("num");
+            }
+        }
+    }
+
+</script>
+
+<style lang="less">
+
+
+</style>
