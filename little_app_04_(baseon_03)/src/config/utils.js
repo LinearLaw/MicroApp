@@ -27,6 +27,28 @@ let utils = {
               console.log("fail",res);
             }
         })
+    },
+    setStorage(key,value,time){
+      let t = time || 24*60*60*1000;
+      let tempObj = {
+        data:value,
+        limitTime:new Date().getTime() + parseInt(t)
+      }
+      wx.setStorageSync(key,tempObj);
+    },
+    getStorage(key){
+      let obj = wx.getStorageSync(key);
+      if(obj){
+        let temp = typeof obj == "string"?JSON.parse(obj):obj;
+        if(temp.limitTime < new Date().getTime()){
+          wx.removeStorageSync(key);
+          return undefined;
+        }else{
+          return temp.data
+        }
+      }else{
+        return undefined;
+      }
     }
 }
 export default utils;

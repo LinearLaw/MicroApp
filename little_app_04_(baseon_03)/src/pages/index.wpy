@@ -9,17 +9,39 @@
   .offer__auth{
     border-radius:10px;
   }
-  .title{
-    margin-bottom:10px;
-    font-size:16px;
-  }
   .default__auth__btn{
     border:0;
+  }
+  .form-control{
+    height: 42px;
+    padding-left: 24px;
+    padding-right: 24px;
+    border-radius: 0;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    font-weight: 500;
+    color: #444E5B;
+    border-color: #E1E2E4;
+    background-color: #fff;
+    box-shadow: none;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   }
 </style>
 <template>
   <view class="container">
-    
+    <panel class="default__auth__btn">
+      <view class="title" slot="title">请输入交易密码</view>
+      <input class="form-control" placeholder="交易密码" auto-focus/>
+    </panel>
+    <panel class="default__auth__btn">
+      <view class="title" slot="title">已验证手机</view>
+      <input class="form-control" placeholder="178xxxx5555" />
+    </panel>
+    <panel class="default__auth__btn">
+      <view class="title" slot="title">验证码</view>
+      <input class="form-control" placeholder="" />
+    </panel>
+
     <view class="view__box">
       <button class="btn btn__primary" @tap="viewContract"> 查看合同 </button>               
     </view>
@@ -39,8 +61,6 @@
       <button class="btn" open-type="openSetting">查看授权状态</button>
     </panel>
     <view class="view__box">
-      
-
        <navigator url="/pages/signature" hover-class="navigator-hover"><button class="btn" >签名</button></navigator> 
     </view>
     <camera device-position="front" flash="off" binderror="error" style="width: 100%; height: 300px;margin-top:10px;display:none;"></camera>
