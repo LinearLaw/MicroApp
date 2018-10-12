@@ -49,6 +49,26 @@ let utils = {
       }else{
         return undefined;
       }
-    }
+    },
+    /* 获取当前页面url */
+    getCurrentPageUrlWithArgs() {
+      const pages = getCurrentPages()
+      const currentPage = pages[pages.length - 1]
+      const url = currentPage.route
+      const options = currentPage.options
+      let urlWithArgs = `/${url}?`
+      for (let key in options) {
+        const value = options[key]
+        urlWithArgs += `${key}=${value}&`
+      }
+      urlWithArgs = urlWithArgs.substring(0, urlWithArgs.length - 1)
+      return urlWithArgs;
+    },
+    getParamFromUrl:function(url,name){
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+      var ar = url.split("?");
+      var r = ar[ar.length-1].match(reg);
+      if (r != null) return unescape(r[2]);return null;
+    },
 }
 export default utils;
