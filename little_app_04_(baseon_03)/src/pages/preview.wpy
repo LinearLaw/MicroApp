@@ -1,77 +1,79 @@
 <style lang="less">
-    .operate__area button{
-        display:inline-block;
-        line-height:1;
-        margin-right:10px;
-    }
+.operate__area button {
+    display: inline-block;
+    line-height: 1;
+    margin-right: 10px;
+}
 </style>
 
 <template>
-    <view class="container">
-        <video src="{{tempVideoObj.tempVideoPath}}" style="width: 100%; height: 400px;margin:10px 0;border:1px solid #e2e2e1;" controls ></video>
-        <view class="operate__area">
-            <button class="btn btn__primary" @tap="commitVideo"> 提交视频 </button>
-            <button class="btn btn-promary" @tap="cancelCommit"> 取消 </button>
-            <button class="btn btn-promary" @tap="reRecord"> 重新录制 </button>
-        </view>
-        <view>
-            当前进度{{progress}}
-        </view>
+<view class="container">
+    <video src="{{tempVideoObj.tempVideoPath}}" style="width: 100%; height: 400px;margin:10px 0;border:1px solid #e2e2e1;" controls></video>
+    <view class="operate__area">
+        <button class="btn btn__primary" @tap="commitVideo"> 提交视频 </button>
+        <button class="btn btn-promary" @tap="cancelCommit"> 取消 </button>
+        <button class="btn btn-promary" @tap="reRecord"> 重新录制 </button>
     </view>
+    <view>
+        当前进度{{progress}}
+    </view>
+</view>
 </template>
 <script>
-    import wepy from "wepy";
-    import Panel from '@/components/panel';
-    import utils from "../config/utils.js";
-    import _config from "../config/index.js";
-    export default class Preview extends wepy.page{
-        config = {
-            navigationBarTitleText:"Preview Video"
-        }
-        data = {
-            tempVideoObj:{
-                tempVideoPath:"",
-                tempThumbPath:""
-            },
-            progress:""
-        }
-        onLoad(){
-            this.tempVideoObj = this.$parent.globalData.tempVideoObj;
-        }
-        methods = {
-            commitVideo(){
-                console.log("obj",this.tempVideoObj);
-                const _this = this;
-                const uploadTask = wx.uploadFile({
-                    url: 'http://172.31.7.5:1234/upload', //仅为示例，非真实的接口地址
-                    filePath: _this.tempVideoObj.tempVideoPath,
-                    name: 'file',
-                    success (res){
-                        console.log("success",res);
-                        utils.toast("上传成功");
-                        
-                    },
-                    fail(res){
-                        console.log("fail",res)
-                    }
-                })
+import wepy from "wepy";
+import Panel from '@/components/panel';
+import utils from "../config/utils.js";
+import _config from "../config/index.js";
+export default class Preview extends wepy.page {
+    config = {
+        navigationBarTitleText: "Preview Video"
+    }
+    data = {
+        tempVideoObj: {
+            tempVideoPath: "",
+            tempThumbPath: ""
+        },
+        progress: ""
+    }
+    onLoad() {
+        this.tempVideoObj = this.$parent.globalData.tempVideoObj;
+    }
+    methods = {
+        commitVideo() {
+            console.log("obj", this.tempVideoObj);
+            const _this = this;
+            const uploadTask = wx.uploadFile({
+                url: 'http://172.31.7.5:1234/upload', //仅为示例，非真实的接口地址
+                filePath: _this.tempVideoObj.tempVideoPath,
+                name: 'file',
+                success(res) {
+                    console.log("success", res);
+                    utils.toast("上传成功");
 
-                uploadTask.onProgressUpdate((res) => {
-                    console.log('上传进度', res.progress);
-                    console.log('已经上传的数据长度', res.totalBytesSent);
-                    console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend);
-                    _this.progress = res.progress;
-                    _this.$apply();
-                })
-            },
-            cancelCommit(){
-                wx.redirectTo({url:"index"});
-            },
-            reRecord(){
-                wx.redirectTo({url:"auth"});
-            }
+                },
+                fail(res) {
+                    console.log("fail", res)
+                }
+            })
+
+            uploadTask.onProgressUpdate((res) => {
+                console.log('上传进度', res.progress);
+                console.log('已经上传的数据长度', res.totalBytesSent);
+                console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend);
+                _this.progress = res.progress;
+                _this.$apply();
+            })
+        },
+        cancelCommit() {
+            wx.redirectTo({
+                url: "index"
+            });
+        },
+        reRecord() {
+            wx.redirectTo({
+                url: "auth"
+            });
         }
     }
-
-    
+}
 </script>

@@ -1,122 +1,125 @@
 <style lang="less" scoped>
-    .operate__area button{
-        display:inline-block;
-        line-height:1;
-        margin-right:10px;
-    }
-    .number__area{
-        margin:15px;
-    }
-    .red__round,.record__time{
-        display:inline-block;
-        vertical-align: middle;
-        margin-right:10px;
-    }
-    .red__round{
-        width:15px;
-        height:15px;
-        background:#E84515;
-        border-radius:50%;
-        margin-top:-5px;
-    }
+.operate__area button {
+    display: inline-block;
+    line-height: 1;
+    margin-right: 10px;
+}
+.number__area {
+    margin: 15px;
+}
+.record__time,
+.red__round {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+.red__round {
+    width: 15px;
+    height: 15px;
+    background: #E84515;
+    border-radius: 50%;
+    margin-top: -5px;
+}
 </style>
 
 <template>
-    <view class="container">
-        
-        <camera device-position="front" flash="off" binderror="error" style="width: 100%; height: 400px;margin:10px 0;border:1px solid #e2e2e1;" wx:if="{{openCamera}}">
-            <cover-view class="number__area">
-                <cover-view class="red__round"></cover-view>
-                <cover-view class="record__time">{{time}}</cover-view>
-            </cover-view>
-        </camera>
-        <view class="operate__area">
-            <button class="btn btn__primary" @tap="startView" disabled="{{recordStatus.banStart}}"> 开始录制 </button>
-            <button class="btn btn-promary" @tap="stopView" disabled="{{recordStatus.banStop}}"> 停止录制 </button>
-        </view>
+<view class="container">
+
+    <camera device-position="front" flash="off" binderror="error" style="width: 100%; height: 400px;margin:10px 0;border:1px solid #e2e2e1;" wx:if="{{openCamera}}">
+        <cover-view class="number__area">
+            <cover-view class="red__round"></cover-view>
+            <cover-view class="record__time">{{time}}</cover-view>
+        </cover-view>
+    </camera>
+    <view class="operate__area">
+        <button class="btn btn__primary" @tap="startView" disabled="{{recordStatus.banStart}}"> 开始录制 </button>
+        <button class="btn btn-promary" @tap="stopView" disabled="{{recordStatus.banStop}}"> 停止录制 </button>
     </view>
+</view>
 </template>
 <script>
-    import wepy from "wepy";
-    import Panel from '@/components/panel';
-    import utils from "../config/utils.js";
-    import _config from "../config/index.js";
-    export default class ContractRecord extends wepy.page{
-        config = {
-            navigationBarTitleText:"Contract Record"
-        }
-        data = {
-            ctx:null,
-            openCamera:true,
-            recordStatus:{
-                banStart:false,
-                banStop:true
-            },
-            time:0,
-            step:""
-        }
-        onLoad(){
-            this.ctx = wx.createCameraContext();
-            this.authVerification();
-        }
-        authVerification(){
-            let _this = this;
-            wx.getSetting({
-                success:(res)=>{
-                    console.log("auth status",res.authSetting);
-                    if(!res.authSetting["scope.camera"] || !res.authSetting["scope.record"] ){
-                        wx.redirectTo({url:"auth"});
-                    }
+import wepy from "wepy";
+import Panel from '@/components/panel';
+import utils from "../config/utils.js";
+import _config from "../config/index.js";
+export default class ContractRecord extends wepy.page {
+    config = {
+        navigationBarTitleText: "Contract Record"
+    }
+    data = {
+        ctx: null,
+        openCamera: true,
+        recordStatus: {
+            banStart: false,
+            banStop: true
+        },
+        time: 0,
+        step: ""
+    }
+    onLoad() {
+        this.ctx = wx.createCameraContext();
+        this.authVerification();
+    }
+    authVerification() {
+        let _this = this;
+        wx.getSetting({
+            success: (res) => {
+                console.log("auth status", res.authSetting);
+                if (!res.authSetting["scope.camera"] || !res.authSetting["scope.record"]) {
+                    wx.redirectTo({
+                        url: "auth"
+                    });
                 }
-            })
-        }
-        methods = {
-            startView(){
-                var _this = this;
-                _this.recordStatus.banStart = true;
-                _this.recordStatus.banStop = false;
-                this.ctx.startRecord({
-                    timeoutCallback:(res)=>{
-                        _this.completeRecord(res);
-                        _this.$apply();
-                    },
-                    success(){
-                        _this.startTime();
-                    }
-                });
-            },
-            stopView(){
-                var _this = this;
-                _this.recordStatus.banStart = false;
-                _this.recordStatus.banStop = true;
-                this.ctx.stopRecord({
-                    success:(res)=>{
-                        _this.completeRecord(res);
-                        _this.$apply();
-                    }
-                });
             }
-        }
-        startTime(){
-            let _this = this;
-            this.step = setInterval(()=>{
-                
-                _this.time ++;
-                if(_this.time<=0){
-                    clearInterval(_this.step);
+        })
+    }
+    methods = {
+        startView() {
+            var _this = this;
+            _this.recordStatus.banStart = true;
+            _this.recordStatus.banStop = false;
+            this.ctx.startRecord({
+                timeoutCallback: (res) => {
+                    _this.completeRecord(res);
+                    _this.$apply();
+                },
+                success() {
+                    _this.startTime();
                 }
-                _this.$apply();
-            },1000)
-        }
-        completeRecord(res){
-            clearInterval(this.step);
-            this.$parent.globalData.tempVideoObj = res;
-            wx.redirectTo({url:"preview"});
-        }
-        error(e) {
-            console.log(e.detail);
+            });
+        },
+        stopView() {
+            var _this = this;
+            _this.recordStatus.banStart = false;
+            _this.recordStatus.banStop = true;
+            this.ctx.stopRecord({
+                success: (res) => {
+                    _this.completeRecord(res);
+                    _this.$apply();
+                }
+            });
         }
     }
+    startTime() {
+        let _this = this;
+        this.step = setInterval(() => {
 
-    
+            _this.time++;
+            if (_this.time <= 0) {
+                clearInterval(_this.step);
+            }
+            _this.$apply();
+        }, 1000)
+    }
+    completeRecord(res) {
+        clearInterval(this.step);
+        this.$parent.globalData.tempVideoObj = res;
+        wx.redirectTo({
+            url: "preview"
+        });
+    }
+    error(e) {
+        console.log(e.detail);
+    }
+}
 </script>

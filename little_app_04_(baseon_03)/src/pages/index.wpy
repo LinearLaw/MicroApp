@@ -1,18 +1,22 @@
 <style lang="less" scoped>
-  .radio-group{
+.radio-group {
     text-align: left;
-  }
+}
 
-  checkbox,text{
+checkbox,
+text {
     vertical-align: middle;
-  }
-  .offer__auth{
-    border-radius:10px;
-  }
-  .default__auth__btn{
-    border:0;
-  }
-  .form-control{
+}
+
+.offer__auth {
+    border-radius: 10px;
+}
+
+.default__auth__btn {
+    border: 0;
+}
+
+.form-control {
     height: 42px;
     padding-left: 24px;
     padding-right: 24px;
@@ -24,78 +28,69 @@
     border-color: #E1E2E4;
     background-color: #fff;
     box-shadow: none;
-    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  }
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
 </style>
 <template>
-  <view class="container">
+<view class="container">
+    <test></test>
+
+    <view class="view__box">
+        <button class="btn btn__primary" @tap="viewContract"> 查看 </button>
+    </view>
+    <view class="view__box">
+        <label for="check__box">
+                <checkbox-group class="radio-group" @change="checkboxChange">
+                    <checkbox id="check__box" value="{{true}}" />
+                    <text>{{confirmContract.value}}</text>
+                </checkbox-group>
+            </label>
+    </view>
+    <view class="view__box">
+        <button class="btn btn__primary" @tap="commitInfo"> 提交 </button>
+    </view>
     <panel class="default__auth__btn">
-      <view class="title" slot="title">请输入交易密码</view>
-      <input class="form-control" placeholder="交易密码" auto-focus/>
-    </panel>
-    <panel class="default__auth__btn">
-      <view class="title" slot="title">已验证手机</view>
-      <input class="form-control" placeholder="178xxxx5555" />
-    </panel>
-    <panel class="default__auth__btn">
-      <view class="title" slot="title">验证码</view>
-      <input class="form-control" placeholder="" />
-    </panel>
-
-    <view class="view__box">
-      <button class="btn btn__primary" @tap="viewContract"> 查看合同 </button>
-    </view>
-    <view class="view__box">
-      <label for="check__box">
-        <checkbox-group class="radio-group" @change="checkboxChange">
-          <checkbox id="check__box" value="{{true}}"/>
-          <text>{{confirmContract.value}}</text>
-        </checkbox-group>
-      </label>
-    </view>
-    <view class="view__box">
-      <button class="btn btn__primary" @tap="commitInfo"> 提交 </button>
-    </view>
-    <panel class="default__auth__btn" >
-      <view slot="title"></view>
-      <button class="btn" open-type="openSetting">查看授权状态</button>
+        <view slot="title"></view>
+        <button class="btn" open-type="openSetting">查看授权状态</button>
     </panel>
     <view class="view__box">
-       <navigator url="/pages/signature" hover-class="navigator-hover"><button class="btn" >签名</button></navigator>
+        <navigator url="/pages/signature" hover-class="navigator-hover">
+            <button class="btn">签名</button>
+        </navigator>
     </view>
-
-
-
     <nativetest></nativetest>
-  </view>
+</view>
 </template>
 
 
 <script>
-  import wepy from 'wepy'
-  import Panel from '@/components/panel' // alias example
-  import TestNative from '@/components/test-native-ability';
+import wepy from 'wepy'
+import Panel from '@/components/panel' // alias example
+import TestNative from '@/components/test-native-ability';
+import ForTest from "@/components/for-test";
 
-  import utils from "../config/utils.js";
-  import _config from "../config/index.js"
-  export default class Index extends wepy.page {
+import utils from "../config/utils.js";
+import _config from "../config/index.js"
+export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: 'Contract'
+        navigationBarTitleText: 'Contract'
     }
     components = {
-      panel: Panel,
-      nativetest:TestNative
+        panel: Panel,
+        nativetest: TestNative,
+        test: ForTest
     }
 
     mixins = []
 
     data = {
-      confirmContract:{
-        signal:false,
-        value:"同意协议",
-        bool:false
-      },
-      url:""
+        confirmContract: {
+            signal: false,
+            value: "同意协议",
+            bool: false
+        },
+        url: ""
     }
 
     computed = {
@@ -103,36 +98,38 @@
     }
 
     methods = {
-      /* tap commit button */
-      commitInfo(){
-        var _this = this;
-        if(this.confirmContract.bool == "true"){
-          wx.navigateTo({url:"auth"});
-        }else{
-          utils.toast("请点击同意协议");
+        /* tap commit button */
+        commitInfo() {
+            var _this = this;
+            if (this.confirmContract.bool == "true") {
+                wx.navigateTo({
+                    url: "auth"
+                });
+            } else {
+                utils.toast("请点击同意协议");
+            }
+        },
+        viewContract() {
+            // wx.navigateTo({url:"preview-pdf"});
+            let _this = this;
+            utils.viewDocument(this.url);
         }
-      },
-      viewContract(){
-        // wx.navigateTo({url:"preview-pdf"});
-        let _this = this;
-        utils.viewDocument(this.url);
-      }
     }
-    checkboxChange(e){
-      this.confirmContract.bool = e.detail.value[0];
+    checkboxChange(e) {
+        this.confirmContract.bool = e.detail.value[0];
     }
     events = {
 
     }
 
     onLoad() {
-      this.ctx =  wepy.createCameraContext();
-      wx.authorize({
-        scope:"scope.record"
-      });
-      wx.authorize({
-        scope:"scope.camera"
-      });
+        this.ctx = wepy.createCameraContext();
+        wx.authorize({
+            scope: "scope.record"
+        });
+        wx.authorize({
+            scope: "scope.camera"
+        });
     }
-  }
+}
 </script>
