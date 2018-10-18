@@ -2,27 +2,109 @@
     <view class="container for_test">
         <view> For test </view>
         <view class="box back_page"></view>
+        <view class="test_login">
+            <input type="text" name="" value="{{acc}}" placeholder="account" @input="accInput">
+            <input type="text" name="" value="{{p}}" placeholder="password" @input="pInput">
+            <input type="text" name="" value="{{ve}}" placeholder="verify code" @input="veInput">
+            <view class="get_vcode " @tap="changeVcode">
+                <image style="width:100%;height:100%;" src="{{vcodeUrl}}"  mode="aspectFit" ></image>
+            </view>
+            <button type="button" name="button" @tap="loginTest">login</button>
+        </view>
     </view>
 </template>
 
 <script>
-    import wepy from "wepy";
-    export default class ForTest extends wepy.component {
-
+import wepy from "wepy";
+import {
+    hex_md5
+} from "../assets/js/md5.js";
+import utils from "../config/utils.js"
+const basePath = "http://localhost:8087/wsxd-front/";
+export default class ForTest extends wepy.component {
+    data = {
+        acc: "",
+        p: "",
+        ve: "",
+        vcodeUrl: "",
+        session:""
     }
+    methods = {
+        changeVcode() {
+            // this.vcodeUrl = basePath + "/captcha/image?time=" + new Date().getTime();
+            const _this = this;
+            wx.request({
+                url: basePath + "/captcha/image?time=" + new Date().getTime(), //仅为示例，并非真实的接口地址
+                method:"GET",
+                success(res) {
+                    console.log(res.data,res.header);
+                    console.log(res.header["Set-Cookie"]);
+                    _this.vcodeUrl = res.data;
+                    let rawData = res.header["Set-Cookie"];
+                    let newData = utils.urls.getParamFromUrl(rawData,"JSESSIONID");
+                    console.log(newData.split(";")[0]);
+                    _this.session = newData.split(";")[0]
+                }
+            })
+        },
+        accInput(e){
+            this.acc = e.detail.value;
+        },
+        pInput(e){
+            this.p = e.detail.value;
+        },
+        veInput(e){
+            this.ve = e.detail.value;
+        },
+        loginTest() {
+            let _this = this;
+            let param = {
+                "phone": _this.acc,
+                "password": hex_md5(_this.p),
+                "captcha": _this.ve
+            };
+            wx.request({
+                url: basePath + "/user/toLogin", //仅为示例，并非真实的接口地址
+                method:"POST",
+                data: param,
+                dataType: "json",
+                header:{
+                    'content-type':'application/x-www-form-urlencoded; charset=UTF-8'
+                },
+                success(res) {
+                    console.log(res.data,res.header);
+                }
+            })
+        }
+    }
+}
 </script>
 
 <style lang="less" scoped>
 .for_test {
     width: 100%;
     height: 100%;
-    margin:10px 0;
+    margin: 10px 0;
 }
-.box{
-    width:200px;
-    height:200px;
-    &.back_page{
-        background:linear-gradient(90deg,#e2e2e1,blue);
+.box {
+    width: 200px;
+    height: 200px;
+    &.back_page {
+        background: linear-gradient(90deg,#e2e2e1,blue);
+    }
+}
+.test_login {
+    button {
+        margin-top: 10px;
+    }
+    input {
+        border: 1px solid #e2e2e1;
+        margin: 10px 0;
+    }
+    .get_vcode {
+        width: 150px;
+        height: 30px;
+        background: red;
     }
 }
 </style>
