@@ -41,11 +41,11 @@ text {
     </view>
     <view class="view__box">
         <label for="check__box">
-                <checkbox-group class="radio-group" @change="checkboxChange">
-                    <checkbox id="check__box" value="{{true}}" />
-                    <text>{{confirmContract.value}}</text>
-                </checkbox-group>
-            </label>
+            <checkbox-group class="radio-group" @change="checkboxChange">
+                <checkbox id="check__box" value="{{true}}" />
+                <text>{{confirmContract.value}}</text>
+            </checkbox-group>
+        </label>
     </view>
     <view class="view__box">
         <button class="btn btn__primary" @tap="commitInfo"> 提交 </button>
