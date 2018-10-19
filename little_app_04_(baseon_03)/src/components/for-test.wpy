@@ -36,10 +36,17 @@ export default class ForTest extends wepy.component {
             wx.request({
                 url: basePath + "/captcha/image?time=" + new Date().getTime(), //仅为示例，并非真实的接口地址
                 method:"GET",
+                dataType:"其他",//必须指定
+                responseType:"arraybuffer",//必须指定
                 success(res) {
                     console.log(res.data,res.header);
                     console.log(res.header["Set-Cookie"]);
-                    _this.vcodeUrl = res.data;
+
+                    //关键，将arrayBuffer转成base64
+                    let picData = wx.arrayBufferToBase64(res.data);
+                    _this.vcodeUrl = 'data:image/jpg;base64,' + picData;
+
+                    //拿到cookie
                     let rawData = res.header["Set-Cookie"];
                     let newData = utils.urls.getParamFromUrl(rawData,"JSESSIONID");
                     console.log(newData.split(";")[0]);
