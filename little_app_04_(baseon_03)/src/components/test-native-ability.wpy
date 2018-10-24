@@ -1,5 +1,5 @@
 <template>
-    
+
     <view class="view__box">
         <view>测试原生能力</view>
         <view>当前能力值：{{skillPoint}}</view>
@@ -11,14 +11,14 @@
 </template>
 <script>
     import wepy from "wepy"
-    import utils from "../config/utils"
+    import utils from "../assets/js/utils"
     export default class TestNative extends wepy.component{
         data = {
             skillPoint:0
         }
         methods = {
             getSto(){
-                let d = utils.getStorage("num");
+                let d = utils.wxExpansion.getStorage("num");
                 if(d){
                     this.skillPoint = d;
                 }else{
@@ -27,7 +27,7 @@
             },
             setSto(){
                 let d = this.skillPoint + 1;
-                utils.setStorage("num",d);
+                utils.wxExpansion.setStorage("num",d);
             },
             resetSto(){
                 wx.removeStorageSync("num");

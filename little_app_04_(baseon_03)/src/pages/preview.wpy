@@ -22,7 +22,7 @@
 <script>
 import wepy from "wepy";
 import Panel from '@/components/panel';
-import utils from "../config/utils.js";
+import utils from "../assets/js/utils.js";
 import _config from "../config/index.js";
 export default class Preview extends wepy.page {
     config = {
@@ -48,7 +48,7 @@ export default class Preview extends wepy.page {
                 name: 'file',
                 success(res) {
                     console.log("success", res);
-                    utils.toast("上传成功");
+                    utils.wxExpansion.toast("上传成功");
 
                 },
                 fail(res) {

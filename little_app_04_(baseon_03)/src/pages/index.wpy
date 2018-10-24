@@ -70,7 +70,7 @@ import Panel from '@/components/panel' // alias example
 import TestNative from '@/components/test-native-ability';
 import ForTest from "@/components/for-test";
 
-import utils from "../config/utils.js";
+import utils from "../assets/js/utils.js";
 import _config from "../config/index.js"
 export default class Index extends wepy.page {
     config = {
@@ -106,13 +106,13 @@ export default class Index extends wepy.page {
                     url: "auth"
                 });
             } else {
-                utils.toast("请点击同意协议");
+                utils.wxExpansion.toast("请点击同意协议");
             }
         },
         viewContract() {
             // wx.navigateTo({url:"preview-pdf"});
             let _this = this;
-            utils.viewDocument(this.url);
+            utils.wxExpansion.viewDocument(this.url);
         }
     }
     checkboxChange(e) {

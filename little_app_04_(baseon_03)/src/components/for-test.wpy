@@ -19,7 +19,7 @@ import wepy from "wepy";
 import {
     hex_md5
 } from "../assets/js/md5.js";
-import utils from "../config/utils.js"
+import utils from "../assets/js/utils.js"
 const basePath = "http://localhost:8087/wsxd-front/";
 export default class ForTest extends wepy.component {
     data = {

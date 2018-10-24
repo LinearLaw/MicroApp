@@ -11,7 +11,7 @@
 <script>
 import wepy from 'wepy'
 import Panel from '@/components/panel' // alias example
-import utils from "../config/utils.js";
+import utils from "../assets/js/utils.js";
 import _config from "../config/index.js"
 export default class ViewHtml extends wepy.page {
     config = {
