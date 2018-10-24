@@ -72,6 +72,9 @@
 
 	摄像头拍摄的界面，需要单独的一个页面进行。
 	使用camera标签来标识摄像头拍摄到的图像的位置，在camera中无法插入其他的wxml元素。
+    限制可以插入cover-view标签来显示基本的文字。
+    slot不可使用。
+
 		同时，拍照完成后，camera会继续采景。
 	也就是说：
 		1、进入到这个页面时，调取wx.createCamera创建摄像头对象，向用户申请授权摄像头的使用。
@@ -146,6 +149,9 @@
 
                 }
             })
+        
+        Tips：redirectTo和navigateTo可以配合使用，有些页面不需要用户再返回就可以考虑不进入堆栈。
+
 	(2)界面工具
 		模态框
             wx.showModal({
@@ -174,8 +180,53 @@
             })
 			wx.hideLoading()
 
+        Tips：界面工具，showToast的层级在video等原生组件层级之上。
+            若直接以标签形式写入<toast>内容</toast>，然后用wx:if控制开关，也可行，
+            但是这个toast标签的层级将会在video等原生组件的层级之下，注意。
+
+        Tips：目前发现的可以标签化的方法有俩，
+            一是<toast icon="success">提示的内容</toast>，其中，icon的值参考icon组件的type值；
+            二是<loading>提示的内容</loading>；
+            两者都可以用wx:if控制显示隐藏，但是都会比原生组件层级要低。
+
+    （3）组件
+
+        ①、<scroll-view scroll-y> </scroll-view>
+
+            Tips：scroll-view将建立起一个可以滑动的视图。
+                注意，直接css控制overflow:auto，页面也可以滑动，但是会有卡顿现象，
+                换scroll-view将大大改善。
+
+            
+
+            Tips：常用的事件有
+                bindscrolltolower：滚动到底部或最右的时候，触发；
+                    可设置lower-threshold，规定在距离底部多远处触发事件，
+                    eg：lower-threshold="100"
+
+                bindscrolltoupper：滚动到顶部或最左的时候，触发；
+                    可设置lower-threshold，规定在距离底部多远处触发事件，
+                    eg：upper-threshold="100"
+
+                bindscroll：滚动即触发。function里面带一个event对象。
+                    event.detail = {scrollLeft, scrollTop, scrollHeight, scrollWidth, deltaX, deltaY}
+            
+            Tips：关于滚动，scroll-view的竖向滚动，要求scroll-view本身带有height属性，100%就行。
+
+        ②、<cover-view></cover-view>
+            Tips：cover-view的层级在原生组件之上，即可覆盖map、video、camera。
+            Tips：cover-view里面只支持放cover-view、cover-image和button。其他标签不支持。
+
+        ③、<button></button>
+            Tips：button的边框有点问题。
+            Tips：button本体设置border:none，outline:none；
+                除此之外！还要给button:after，设置border:none，即可完全去除边框。
+            Tips：加入open-type属性，可令按钮拥有访问原生能力的权限。
+
 
 ```
+
+
 
 
 
