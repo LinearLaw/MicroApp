@@ -1,0 +1,78 @@
+<template>
+
+    <view class="container">
+        <view class="pic_arr">
+            <repeat  for="{{picArr}}" key="index" index="index" item="item">
+                <view class="pic_item">
+                    <view class="pic_box" @tap="viewLargePic({{index}})">
+                        <image src="{{item}}" mode="aspectFit"></image>
+                    </view>
+                </view>
+            </repeat>
+            <view class="view__box">
+                <view>点击图片可预览</view>
+            </view>
+        </view>
+    </view>
+</template>
+
+<script>
+
+import wepy from "wepy";
+import utils from "../../assets/js/utils.js";
+import config from "../../config/index.js";
+const basePath = "http://172.31.7.4:1234"
+export default class MultiplePic extends wepy.page{
+    config={
+        navigationBarTitleText:"Multiple Pic"
+    }
+    data={
+        picArr:[
+            basePath + "/img/pic1.png",
+            basePath + "/img/pic2.png",
+            basePath + "/img/pic3.png",
+            basePath + "/img/pic4.png",
+            basePath + "/img/pic5.png",
+            basePath + "/img/pic6.png",
+            basePath + "/img/pic7.png",
+            basePath + "/img/pic8.png",
+            basePath + "/img/pic9.png",
+            basePath + "/img/pic0.png"
+        ]
+    }
+    methods={
+        viewLargePic(index){
+            const _this = this;
+            wx.previewImage({
+                urls:_this.picArr,
+                current:_this.picArr[index]
+            })
+        }
+    }
+}
+</script>
+
+<style lang="less">
+.pic_arr{
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-wrap:wrap;
+    .pic_item{
+        width:33%;
+        height:90px;
+        padding:5px;
+        float:left;
+        .pic_box{
+            width:100%;
+            height:100%;
+            border:1px solid #e2e2e1;
+        }
+        image{
+            width:100%;
+            height:100%;
+        }
+    }
+}
+
+</style>

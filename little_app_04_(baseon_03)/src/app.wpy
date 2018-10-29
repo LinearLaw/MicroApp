@@ -18,7 +18,8 @@ export default class extends wepy.app {
       "pages/testapi/entrance",
       "pages/testapi/view-html",
       "pages/testapi/signature",
-      "pages/testapi/storage"
+      "pages/testapi/storage",
+      "pages/testapi/multiplepic",
     ],
     window: {
       backgroundTextStyle: 'light',

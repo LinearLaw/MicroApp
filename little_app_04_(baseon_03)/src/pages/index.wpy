@@ -23,7 +23,6 @@
 </view>
 </template>
 
-
 <script>
 import wepy from 'wepy'
 import utils from "../assets/js/utils.js";
@@ -54,7 +53,7 @@ export default class Index extends wepy.page {
     }
 
     onLoad() {
-
+        // wx.navigateTo({url:"/pages/testapi/multiplepic"});
     }
 }
 </script>
