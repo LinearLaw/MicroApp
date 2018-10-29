@@ -37,28 +37,21 @@ text {
     <test></test>
 
     <view class="view__box">
-        <button class="btn btn__primary" @tap="viewContract"> 查看 </button>
+        <navigator url="/pages/testapi/entrance">
+            <button class="btn btn__primary"> API 测试 </button>
+        </navigator>
     </view>
+
     <view class="view__box">
-        <label for="check__box">
-            <checkbox-group class="radio-group" @change="checkboxChange">
-                <checkbox id="check__box" value="{{true}}" />
-                <text>{{confirmContract.value}}</text>
-            </checkbox-group>
-        </label>
-    </view>
-    <view class="view__box">
-        <button class="btn btn__primary" @tap="commitInfo"> 提交 </button>
+        <navigator url="/pages/video/entrance">
+            <button class="btn btn__primary"> 视频录制 </button>
+        </navigator>
     </view>
     <panel class="default__auth__btn">
         <view slot="title"></view>
         <button class="btn" open-type="openSetting">查看授权状态</button>
     </panel>
-    <view class="view__box">
-        <navigator url="/pages/signature" hover-class="navigator-hover">
-            <button class="btn">签名</button>
-        </navigator>
-    </view>
+
     <nativetest></nativetest>
 </view>
 </template>
@@ -98,38 +91,18 @@ export default class Index extends wepy.page {
     }
 
     methods = {
-        /* tap commit button */
-        commitInfo() {
-            var _this = this;
-            if (this.confirmContract.bool == "true") {
-                wx.navigateTo({
-                    url: "auth"
-                });
-            } else {
-                utils.wxExpansion.toast("请点击同意协议");
-            }
-        },
         viewContract() {
             // wx.navigateTo({url:"preview-pdf"});
             let _this = this;
             utils.wxExpansion.viewDocument(this.url);
         }
     }
-    checkboxChange(e) {
-        this.confirmContract.bool = e.detail.value[0];
-    }
     events = {
 
     }
 
     onLoad() {
-        this.ctx = wepy.createCameraContext();
-        wx.authorize({
-            scope: "scope.record"
-        });
-        wx.authorize({
-            scope: "scope.camera"
-        });
+
     }
 }
 </script>

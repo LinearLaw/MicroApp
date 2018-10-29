@@ -1,0 +1,33 @@
+<template>
+    <view class="container">
+        <view class="view__box">
+            <navigator url="/pages/testapi/view-pdf">
+                <button class="btn btn__primary"> 进入查看PDF </button>
+            </navigator>
+        </view>
+        <view class="view__box">
+            <navigator url="/pages/testapi/signature" hover-class="navigator-hover">
+                <button class="btn">签名API</button>
+            </navigator>
+        </view>
+
+        <view class="view__box">
+            <navigator url="/pages/testapi/view-html" hover-class="navigator-hover">
+                <button class="btn">跳转到外链</button>
+            </navigator>
+        </view>
+
+    </view>
+</template>
+
+<script>
+export default class TestAPIEntrance extends wepy.page {
+    config={
+        navigationBarTitleText:"Test API Entrance"
+    }
+}
+</script>
+
+<style lang="less">
+
+</style>

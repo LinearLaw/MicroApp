@@ -1,0 +1,76 @@
+<style lang="less">
+    @import "../../../assets/less/video.less";
+</style>
+<template>
+    <view class="record preview_video">
+        <view class="record_container">
+            <video class="record_main" src="{{tempVideoObj.tempVideoPath}}" controls ></video>
+            <view class="record_content">
+                <slot name="content"></slot>
+            </view>
+        </view>
+        <view class="button_area">
+            <view class="record_attention font_12">请确保以上文字已清晰准确的读完。</view>
+            <button class="btn btn_primary" @tap="commit"> 确认提交 </button>
+            <button class="btn btn_warning" @tap="backRecord"> 重新录制 </button>
+        </view>
+    </view>
+</template>
+
+<script>
+import wepy from "wepy";
+
+import utils from "../../assets/js/utils.js";
+import _config from "../../config/index.js";
+
+export default class PreviewComponent extends wepy.component {
+    data = {
+        tempVideoObj:{
+            tempVideoPath:"",
+            tempThumbPath:""
+        },
+        urlOptions:{}
+    }
+    onLoad(){
+        let _this = this;
+        let urls = utils.urls.getCurrentPageUrlWithArgs();
+        this.urlOptions = utils.urls.getUrlParam(urls);
+
+        if(this.urlOptions.file){
+            this.tempVideoObj = JSON.parse(_this.urlOptions.file);
+        }else{
+            utils.wxExpansion.toast("视频错误，请重新录制");
+            this.rerecord();
+        }
+        console.log(this.tempVideoObj,this.urlOptions);
+        this.$apply();
+    }
+    methods={
+        commit(){
+            this.$emit("recordUpload");
+        },
+        backRecord(){
+            this.rerecord();
+        }
+    }
+    //back to re record video
+    rerecord(){
+        const _this = this;
+        let obj = {};
+        Object.getOwnPropertyNames(_this.urlOptions).map(function(item,index){
+            if(item == "file"){
+                return;
+            }
+            obj[item] = _this.urlOptions[item];
+        });
+        let params = utils.urls.makeUrlParams(obj);
+        wx.redirectTo({url:"/pages/video/auth"+params});
+    }
+    // get url params and build new string without params
+    getParams(){
+        const _this = this;
+    }
+
+
+}
+</script>

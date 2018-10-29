@@ -1,0 +1,28 @@
+<template>
+  <view class="container">
+      <view class="view__box">
+          <button class="btn btn__primary" @tap="viewContract"> 查看PDF </button>
+      </view>
+  </view>
+</template>
+
+<script>
+export default class ViewPDF extends wepy.page {
+    config={
+        navigationBarTitleText:"ViewPDF"
+    }
+    data={
+        url:""
+    }
+    methods={
+        viewContract() {
+            let _this = this;
+            utils.wxExpansion.viewDocument(this.url);
+        }
+    }
+
+}
+</script>
+
+<style lang="css">
+</style>

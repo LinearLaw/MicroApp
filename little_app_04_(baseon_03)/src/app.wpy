@@ -1,35 +1,5 @@
 <style lang="less">
-page, view, scroll-view, swiper, movable-area, cover-view, text, icon, rich-text,
-progress, button, checkbox-group, checkbox, form, input, label, picker,
-picker-view, radio-group, slider, switch, textarea, navigator, audio, image,
-video, live-player, live-pusher, open-data, web-view {
-    box-sizing: border-box;
-}
-.container{
-  padding:0 50rpx;
-  width:100%;
-  height:100%;
-}
-.text__wearning{
-  color:#E84515;
-}
-.btn{
-  padding:10px;
-  border:0;
-  line-height:1;
-}
-.btn__primary{
-  background:#6897FF;
-  color:#fff;
-}
-.btn__wearning{
-  background: #F6BE00;
-  color:#fff;
-}
-.view__box{
-  width:100%;
-  margin-bottom:10px;
-}
+@import "./assets/less/common.less";
 
 </style>
 
@@ -41,11 +11,12 @@ export default class extends wepy.app {
   config = {
     pages: [
       'pages/index',
-      'pages/contract-record',
-      'pages/auth',
-      "pages/preview",
-      "pages/view-html",
-      "pages/signature"
+      'pages/video/entrance',
+      'pages/video/record',
+      'pages/video/auth',
+      "pages/video/preview",
+      "pages/testapi/view-html",
+      "pages/testapi/signature"
     ],
     window: {
       backgroundTextStyle: 'light',

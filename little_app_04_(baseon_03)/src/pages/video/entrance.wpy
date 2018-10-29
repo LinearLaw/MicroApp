@@ -1,0 +1,64 @@
+<template>
+    <view class="container">
+        <view class="view__box">
+            <label for="check__box">
+                <checkbox-group class="radio-group" @change="checkboxChange">
+                    <checkbox id="check__box" value="{{true}}" />
+                    <text>{{confirmContract.value}}</text>
+                </checkbox-group>
+            </label>
+        </view>
+        <view class="view__box">
+            <button class="btn btn__primary" @tap="commitInfo"> 进入拍摄视频 </button>
+        </view>
+    </view>
+</template>
+
+<script>
+import wepy from "wepy";
+import utils from "../../assets/js/utils.js";
+import config from "../../config/index.js";
+export default class VideoEntrance extends wepy.page{
+    config ={
+        navigationBarTitleText:"Video Entrance";
+    }
+    data = {
+        confirmContract: {
+            signal: false,
+            value: "同意协议",
+            bool: false
+        },
+    }
+    methods = {
+        /* tap commit button */
+        commitInfo() {
+            var _this = this;
+            if (this.confirmContract.bool == "true") {
+                //1、pipe后接授权查询完毕之后，需要跳转到的页面，路径以pages为基准，
+                //      eg：当前pipe=video/record，查询授权结束后，将会跳转到/pages/video/record
+                //2、pipe必传，在pipe后面可以带其他参数，参数会带到pipe指向的页面
+                //      eg：pipe=video/record&a=123
+
+                wx.navigateTo({url:"/pages/video/auth?pipe=video/record"});
+            } else {
+                utils.wxExpansion.toast("请点击同意协议");
+            }
+        }
+    }
+    checkboxChange(e) {
+        this.confirmContract.bool = e.detail.value[0];
+    }
+    onLoad() {
+        //申请授权
+        wx.authorize({
+            scope: "scope.record"
+        });
+        wx.authorize({
+            scope: "scope.camera"
+        });
+    }
+}
+</script>
+
+<style lang="css">
+</style>

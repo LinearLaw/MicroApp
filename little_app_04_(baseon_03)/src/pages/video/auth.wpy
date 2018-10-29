@@ -1,0 +1,84 @@
+<style lang="less" scoped>
+    .auth_container{
+        width:100%;
+        height:100%;
+        .container{
+            width:100%;
+            height:100%;
+            display:flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .btn_wearning{
+            outline:none;
+            border:0;
+            height:auto;
+            padding:10px 20px;
+            font-size:16px;
+            margin-top:-50px;
+        }
+    }
+</style>
+
+
+<template>
+    <view class="auth_container">
+        <view class="container">
+            <view wx:if="{{noAuth}}">
+                <panel class="offer__auth">
+                    <view class="title text__wearning view__box" slot="title">您需要对摄像头的使用进行授权，以便于拍摄面签视频</view>
+                    <button class="btn btn__wearning" open-type="openSetting" bindopensetting="bindOpenSetting">点击此处，进行授权</button>
+                </panel>
+            </view>
+        </view>
+    </view>
+
+</template>
+
+<script>
+import wepy from "wepy";
+import Panel from "@/components/panel";
+
+import utils from "../../assets/js/utils.js";
+import _config from "../../config/index.js"
+export default class Auth extends wepy.page {
+    data = {
+        noAuth: false,
+        pipeUrl:"",
+        urlParams:"", //当前url所有参数
+    }
+    onLoad() {
+        let _this = this;
+        this.pipeUrl = options.pipe;
+        this.urlParams = utils.urls.makeUrlParams(options);
+        wx.showLoading({
+            title: "获取授权状态中..."
+        })
+        wx.getSetting({
+            success: (res) => {
+                if (!res.authSetting["scope.camera"] || !res.authSetting["scope.record"]) {
+                    _this.noAuth = true;
+                    _this.$apply();
+                } else {
+                    wx.redirectTo({url:"/pages/"+_this.pipeUrl+_this.urlParams});
+                }
+            },
+            complete: () => {
+                wx.hideLoading();
+            }
+        })
+    }
+    bindOpenSetting(e) {
+        console.log(e.detail);
+        if (!!e.detail.authSetting["scope.camera"] && !!e.detail.authSetting["scope.record"]) {
+            //用户按了允许授权按钮
+            this.noAuth = false;
+            wx.redirectTo({url:"/pages/"+_this.pipeUrl+_this.urlParams});
+        } else {
+            //用户按了拒绝按钮
+            this.noAuth = true;
+        }
+        this.$apply();
+    }
+}
+</script>
