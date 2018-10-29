@@ -1,79 +1,88 @@
-<style lang="less">
-.operate__area button {
-    display: inline-block;
-    line-height: 1;
-    margin-right: 10px;
-}
-</style>
+<template >
+    <view class="shareholder_record preview_video">
+        <PreviewRecord @recordUpload="recordUpload">
 
-<template>
-<view class="container">
-    <video src="{{tempVideoObj.tempVideoPath}}" style="width: 100%; height: 400px;margin:10px 0;border:1px solid #e2e2e1;" controls></video>
-    <view class="operate__area">
-        <button class="btn btn__primary" @tap="commitVideo"> 提交视频 </button>
-        <button class="btn btn-promary" @tap="cancelCommit"> 取消 </button>
-        <button class="btn btn-promary" @tap="reRecord"> 重新录制 </button>
+            <view slot="content" class="record_text">
+                record inner text
+            </view>
+        </PreviewRecord>
     </view>
-    <view>
-        当前进度{{progress}}
-    </view>
-</view>
 </template>
+
 <script>
 import wepy from "wepy";
-import Panel from '@/components/panel';
+
 import utils from "../../assets/js/utils.js";
 import _config from "../../config/index.js";
-export default class Preview extends wepy.page {
+
+import PreviewRecord from "@/components/video/previewComponent"
+
+export default class ShareholderPreview extends wepy.page {
     config = {
-        navigationBarTitleText: "Preview Video"
+        navigationBarTitleText: 'Preview Record'
     }
     data = {
-        tempVideoObj: {
-            tempVideoPath: "",
-            tempThumbPath: ""
+        tempVideoObj:{
+            tempVideoPath:"",
+            tempThumbPath:""
         },
-        progress: ""
+        urlOptions:{},
+        toast:"none"
     }
-    onLoad() {
-        this.tempVideoObj = this.$parent.globalData.tempVideoObj;
+    components={
+        PreviewRecord
     }
-    methods = {
-        commitVideo() {
-            console.log("obj", this.tempVideoObj);
+
+    onLoad(options){
+        this.urlOptions = options;
+        if(options.file){
+            this.tempVideoObj = JSON.parse(options.file);
+        }else{
+            this.tempVideoObj = {
+                tempVideoPath:"",
+                tempThumbPath:""
+            };
+        }
+    }
+    events={
+        'recordUpload'(){
             const _this = this;
             const uploadTask = wx.uploadFile({
-                url: 'http://172.31.7.5:1234/upload', //仅为示例，非真实的接口地址
+                url: 'http://localhost:1234/upload', //仅为示例，非真实的接口地址
                 filePath: _this.tempVideoObj.tempVideoPath,
                 name: 'file',
-                success(res) {
-                    console.log("success", res);
+                success (res){
                     utils.wxExpansion.toast("上传成功");
-
+                    _this.$apply();
+                    setTimeout(()=>{
+                        wx.redirectTo({url:"/pages/index"})
+                    },500)
                 },
-                fail(res) {
-                    console.log("fail", res)
+                complete(){
+                    wx.hideLoading();
+
+                    //only for test;
+                    wx.redirectTo({url:"/pages/index"});
                 }
             })
 
             uploadTask.onProgressUpdate((res) => {
-                console.log('上传进度', res.progress);
-                console.log('已经上传的数据长度', res.totalBytesSent);
-                console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend);
-                _this.progress = res.progress;
+                // console.log('上传进度', res.progress);
+                // console.log('已经上传的数据长度', res.totalBytesSent);
+                // console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend);
+                _this.loadingProgress = res.progress;
+                wx.showLoading({
+                    title:`上传中 ${res.progress}%`
+                });
                 _this.$apply();
             })
-        },
-        cancelCommit() {
-            wx.redirectTo({
-                url: "index"
-            });
-        },
-        reRecord() {
-            wx.redirectTo({
-                url: "auth"
-            });
         }
     }
+
+
 }
 </script>
+
+<style lang="less">
+
+</style>

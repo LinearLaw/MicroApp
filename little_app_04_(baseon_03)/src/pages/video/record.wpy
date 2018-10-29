@@ -4,7 +4,7 @@
 
 <template>
     <view class="video_record">
-        <Record :targetUrl="targetUrl">
+        <Record targetUrl="video/preview">
             <view slot="content" class="record_text">
                 视频下面的文字自定义
             </view>

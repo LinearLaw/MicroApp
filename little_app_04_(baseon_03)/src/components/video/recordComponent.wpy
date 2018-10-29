@@ -59,7 +59,7 @@ export default class RecordComponent extends wepy.component {
             success: (res) => {
                 if (!res.authSetting["scope.camera"] || !res.authSetting["scope.record"]) {
                     wx.redirectTo({
-                        url: "/pages/common/auth" + _this.urlParams
+                        url: "/pages/video/auth" + _this.urlParams
                     });
                 }
             }

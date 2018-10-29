@@ -10,7 +10,6 @@
             </view>
         </view>
         <view class="button_area">
-            <view class="record_attention font_12">请确保以上文字已清晰准确的读完。</view>
             <button class="btn btn_primary" @tap="commit"> 确认提交 </button>
             <button class="btn btn_warning" @tap="backRecord"> 重新录制 </button>
         </view>

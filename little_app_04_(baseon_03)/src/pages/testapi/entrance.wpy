@@ -17,6 +17,12 @@
             </navigator>
         </view>
 
+        <view class="view__box">
+            <navigator url="/pages/testapi/storage" hover-class="navigator-hover">
+                <button class="btn">原生能力测试</button>
+            </navigator>
+        </view>
+
     </view>
 </template>
 

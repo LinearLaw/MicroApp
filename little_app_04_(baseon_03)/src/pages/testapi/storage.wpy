@@ -1,0 +1,31 @@
+<template>
+    <view class="container">
+        <view class="view__box">
+            <test></test>
+        </view>
+        <view class="view__box">
+            <nativetest></nativetest>
+        </view>
+
+    </view>
+</template>
+
+<script>
+
+import wepy from "wepy";
+
+import TestNative from '@/components/test-native-ability';
+import ForTest from "@/components/for-test";
+
+import utils from "../../assets/js/utils.js";
+import _config from "../../config/index.js";
+export default class WXStorage extends wepy.page {
+    components = {
+        nativetest: TestNative,
+        test: ForTest
+    }
+}
+</script>
+
+<style lang="less">
+</style>

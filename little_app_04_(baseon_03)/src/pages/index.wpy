@@ -1,40 +1,8 @@
 <style lang="less" scoped>
-.radio-group {
-    text-align: left;
-}
-
-checkbox,
-text {
-    vertical-align: middle;
-}
-
-.offer__auth {
-    border-radius: 10px;
-}
-
-.default__auth__btn {
-    border: 0;
-}
-
-.form-control {
-    height: 42px;
-    padding-left: 24px;
-    padding-right: 24px;
-    border-radius: 0;
-    border: 1px solid #ccc;
-    font-size: 15px;
-    font-weight: 500;
-    color: #444E5B;
-    border-color: #E1E2E4;
-    background-color: #fff;
-    box-shadow: none;
-    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-}
 
 </style>
 <template>
 <view class="container">
-    <test></test>
 
     <view class="view__box">
         <navigator url="/pages/testapi/entrance">
@@ -47,22 +15,17 @@ text {
             <button class="btn btn__primary"> 视频录制 </button>
         </navigator>
     </view>
-    <panel class="default__auth__btn">
-        <view slot="title"></view>
-        <button class="btn" open-type="openSetting">查看授权状态</button>
-    </panel>
 
-    <nativetest></nativetest>
+    <view class="view__box">
+       <button class="btn" open-type="openSetting">查看授权状态</button>
+    </view>
+
 </view>
 </template>
 
 
 <script>
 import wepy from 'wepy'
-import Panel from '@/components/panel' // alias example
-import TestNative from '@/components/test-native-ability';
-import ForTest from "@/components/for-test";
-
 import utils from "../assets/js/utils.js";
 import _config from "../config/index.js"
 export default class Index extends wepy.page {
@@ -70,20 +33,13 @@ export default class Index extends wepy.page {
         navigationBarTitleText: 'Contract'
     }
     components = {
-        panel: Panel,
-        nativetest: TestNative,
-        test: ForTest
+
     }
 
     mixins = []
 
     data = {
-        confirmContract: {
-            signal: false,
-            value: "同意协议",
-            bool: false
-        },
-        url: ""
+
     }
 
     computed = {
@@ -91,11 +47,7 @@ export default class Index extends wepy.page {
     }
 
     methods = {
-        viewContract() {
-            // wx.navigateTo({url:"preview-pdf"});
-            let _this = this;
-            utils.wxExpansion.viewDocument(this.url);
-        }
+
     }
     events = {
 
