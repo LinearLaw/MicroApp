@@ -20,7 +20,7 @@ import utils from "../../assets/js/utils.js";
 import config from "../../config/index.js";
 export default class VideoEntrance extends wepy.page{
     config ={
-        navigationBarTitleText:"Video Entrance";
+        navigationBarTitleText:"Video Entrance"
     }
     data = {
         confirmContract: {

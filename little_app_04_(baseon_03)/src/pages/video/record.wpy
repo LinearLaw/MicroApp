@@ -14,7 +14,7 @@
 </template>
 <script>
 import wepy from "wepy";
-import Record from "@/components/common/recordModule/record";
+import Record from "@/components/video/recordComponent";
 import utils from "../../assets/js/utils.js";
 import _config from "../../config/index.js";
 export default class ContractRecord extends wepy.page {

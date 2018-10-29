@@ -1,5 +1,5 @@
 <style lang="less">
-    @import "../../../assets/less/video.less";
+    @import "../../assets/less/video.less";
 </style>
 <template>
     <view class="record preview_video">

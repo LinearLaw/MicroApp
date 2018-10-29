@@ -157,5 +157,5 @@ export default class RecordComponent extends wepy.component {
 </script>
 
 <style lang="less">
-    @import "../../../assets/less/video.less";
+    @import "../../assets/less/video.less";
 </style>
