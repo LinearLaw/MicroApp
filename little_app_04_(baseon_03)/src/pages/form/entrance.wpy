@@ -1,0 +1,71 @@
+<template>
+<view class="container">
+    <view class="view__box">
+        <view>表格</view>
+        <view class="section">
+            <view class="section__title">普通选择器</view>
+            <picker @change="bindPickerChange" class="select_picker" value="{{index}}" range="{{array}}">
+                <view class="picker">
+                    当前选择：{{array[index]}}
+                </view>
+            </picker>
+        </view>
+        <view class="section">
+            <view class="section__title">多列选择器</view>
+            <picker mode="multiSelector" class="select_picker" bindchange="bindMultiPickerChange" value="{{multiIndex}}" range="{{multiArray}}">
+                <view class="picker">
+                    当前选择：{{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}，{{multiArray[2][multiIndex[2]]}}
+                </view>
+            </picker>
+        </view>
+    </view>
+</view>
+</template>
+
+<script>
+import wepy from "wepy";
+
+export default class FormArea extends wepy.page {
+    config = {
+        navigationBarTitleText: "Form"
+    }
+
+    data = {
+        array: ['美国', '中国', '巴西', '日本'],
+        index: 0,
+        multiArray: [
+            ['无脊柱动物', '脊柱动物'],
+            ['扁性动物', '线形动物', '环节动物', '软体动物', '节肢动物'],
+            ['猪肉绦虫', '吸血虫']
+        ],
+        multiIndex: [0, 0, 0],
+
+    }
+    methods={
+
+    }
+    bindPickerChange(e) {
+        console.log('picker发送选择改变，携带值为', e.detail.value);
+        this.index = e.detail.value
+        this.$apply();
+    }
+
+    bindMultiPickerChange(e) {
+        console.log('picker发送选择改变，携带值为', e.detail.value);
+        this.multiIndex = e.detail.value;
+        this.$apply();
+    }
+
+}
+</script>
+
+<style lang="less" scoped>
+.view__box{
+    .section{
+        .select_picker{
+            padding:5px;
+            border:1px solid #666;
+        }
+    }
+}
+</style>
