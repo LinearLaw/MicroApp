@@ -20,6 +20,12 @@
        <button class="btn" open-type="openSetting">查看授权状态</button>
     </view>
 
+    <view class="view__box">
+        <navigator url="/pages/form/entrance">
+            <button class="btn btn__primary"> 表单测试 </button>
+        </navigator>
+    </view>
+
 </view>
 </template>
 

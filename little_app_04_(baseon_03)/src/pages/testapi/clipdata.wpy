@@ -1,0 +1,19 @@
+<template>
+    <view class="container">
+        <view class="view__box">
+            <textarea name="name" rows="8" cols="80"></textarea>
+        </view>
+    </view>
+</template>
+
+<script>
+import wepy from "wepy";
+
+export default class ClipData extends wepy.page{
+
+}
+</script>
+
+<style lang="css">
+
+</style>
