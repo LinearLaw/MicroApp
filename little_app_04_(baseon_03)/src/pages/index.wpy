@@ -5,7 +5,7 @@
 <view class="container">
 
     <view class="view__box">
-        <navigator url="/pages/testapi/entrance">
+        <navigator url="/pages/testapi/entrance" open-type="switchTab">
             <button class="btn btn__primary"> API 测试 </button>
         </navigator>
     </view>
@@ -21,7 +21,7 @@
     </view>
 
     <view class="view__box">
-        <navigator url="/pages/form/entrance">
+        <navigator url="/pages/form/entrance" open-type="switchTab">
             <button class="btn btn__primary"> 表单测试 </button>
         </navigator>
     </view>
