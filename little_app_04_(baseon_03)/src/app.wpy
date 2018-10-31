@@ -1,6 +1,5 @@
 <style lang="less">
 @import "./assets/less/common.less";
-
 </style>
 
 <script>
@@ -8,52 +7,73 @@ import wepy from 'wepy'
 import 'wepy-async-function'
 
 export default class extends wepy.app {
-  config = {
-    pages: [
-      'pages/index',
-      'pages/video/entrance',
-      'pages/video/record',
-      'pages/video/auth',
-      "pages/video/preview",
-      "pages/testapi/entrance",
-      "pages/testapi/view-html",
-      "pages/testapi/signature",
-      "pages/testapi/storage",
-      "pages/testapi/multiplepic",
-      "pages/form/entrance",
-    ],
-    window: {
-      backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
+    config = {
+        pages: [
+            'pages/index',
+            'pages/video/entrance',
+            'pages/video/record',
+            'pages/video/auth',
+            "pages/video/preview",
+            "pages/testapi/entrance",
+            "pages/testapi/view-html",
+            "pages/testapi/signature",
+            "pages/testapi/storage",
+            "pages/testapi/multiplepic",
+            "pages/form/entrance",
+        ],
+        window: {
+            backgroundTextStyle: 'light',
+            navigationBarBackgroundColor: '#fff',
+            navigationBarTitleText: 'WeChat',
+            navigationBarTextStyle: 'black'
+        },
+        "tabBar": {
+            "color": "#a9b7b7",
+            "selectedColor": "#6897FF",
+            "borderStyle": "white",
+            "list": [{
+                "selectedIconPath": "assets/img/icon/home-active.png",
+                "iconPath": "assets/img/icon/home.png",
+                "pagePath": "pages/index",
+                "text": "首页"
+            }, {
+                "selectedIconPath": "assets/img/icon/search-active.png",
+                "iconPath": "assets/img/icon/search.png",
+                "pagePath": "pages/testapi/entrance",
+                "text": "API"
+            }, {
+                "selectedIconPath": "assets/img/icon/user-active.png",
+                "iconPath": "assets/img/icon/user.png",
+                "pagePath": "pages/form/entrance",
+                "text": "Form"
+            }]
+        }
     }
-  }
 
-  globalData = {
-    userInfo: null,
-    tempVideoObj:null
-  }
+    globalData = {
+        userInfo: null,
+        tempVideoObj: null
+    }
 
-  constructor () {
-    super()
-    this.use('requestfix')
-  }
+    constructor() {
+        super()
+        this.use('requestfix')
+    }
 
-  onLaunch() {
-    this.testAsync()
-  }
+    onLaunch() {
+        this.testAsync()
+    }
 
-  sleep (s) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve('promise resolved')
-      }, s * 1000)
-    })
-  }
+    sleep(s) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('promise resolved')
+            }, s * 1000)
+        })
+    }
 
-  async testAsync () {
-    const data = await this.sleep(3)
-  }
+    async testAsync() {
+        const data = await this.sleep(3)
+    }
 }
 </script>
