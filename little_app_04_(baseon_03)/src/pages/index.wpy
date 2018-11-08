@@ -59,7 +59,7 @@ export default class Index extends wepy.page {
     }
 
     onLoad() {
-        // wx.navigateTo({url:"/pages/testapi/multiplepic"});
+        // wx.navigateTo({url:"/pages/testapi/storage"});
     }
 }
 </script>

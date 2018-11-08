@@ -6,6 +6,9 @@
         <view class="view__box">
             <nativetest></nativetest>
         </view>
+        <view class="view__box">
+          <button @tap="redirectPage"> 跳转 </button>
+        </view>
 
     </view>
 </template>
@@ -24,8 +27,18 @@ export default class WXStorage extends wepy.page {
         nativetest: TestNative,
         test: ForTest
     }
+
+    methods={
+      redirectPage(){
+        wx.redirectTo({
+          url:"/pages/testapi/signature"
+        })
+      }
+    }
 }
 </script>
 
 <style lang="less">
+
+
 </style>

@@ -10,15 +10,18 @@ export default class extends wepy.app {
     config = {
         pages: [
             'pages/index',
+
             'pages/video/entrance',
             'pages/video/record',
             'pages/video/auth',
             "pages/video/preview",
+
             "pages/testapi/entrance",
             "pages/testapi/view-html",
             "pages/testapi/signature",
             "pages/testapi/storage",
             "pages/testapi/multiplepic",
+
             "pages/form/entrance",
         ],
         window: {
