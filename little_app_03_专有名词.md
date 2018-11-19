@@ -226,6 +226,20 @@
 
 ```
 
+## 一些坑
+
+    1、下拉加载与scroll-view冲突
+        （1）使用scroll-view， 定义scrolltolower作为下拉到底部时触发的事件。
+
+        （2）页面page中，config开启了 enablePullDownRefresh:true 时，
+            scroll-view将会导致无法下拉，下拉无效果。
+
+        （3）此时，将scroll-view改为view，解决。
+
+        替代方案为：config的同级写入onReachBottom事件，下拉到底时，会自动触发。
+        同时onPullDownRefresh作为下拉刷新事件，在该函数里面操作下拉刷新结束
+
+
 
 
 
