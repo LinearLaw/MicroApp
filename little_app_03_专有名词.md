@@ -239,6 +239,17 @@
         替代方案为：config的同级写入onReachBottom事件，下拉到底时，会自动触发。
         同时onPullDownRefresh作为下拉刷新事件，在该函数里面操作下拉刷新结束
 
+    2、组件传值
+    
+        以下这种方式不被允许：
+            <Modal :modalData="modalData.concelText"></Modal>
+
+        替代方案为：
+            <Modal :modalData="modalData"></Modal>
+
+    3、
+
+
 
 
 

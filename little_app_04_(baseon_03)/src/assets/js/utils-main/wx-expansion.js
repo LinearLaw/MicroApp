@@ -1,5 +1,9 @@
 /**
  * wx api 的扩展
+ * @function toast  调用wx.showToast接口，参数1为需要显示的文本，参数2为图标，显示后在1.5s后消失
+ * @function viewDocument  传入pdf等文档的url，打开这个文档
+ * @function setStorage 设置storage的值，传入key和value即可，默认过期时间24小时
+ * @function getStorage 获取storage的值，传入key，有该值返回值，无该值返回undefined
  */
 
 const wxExpansion = {
@@ -55,9 +59,22 @@ const wxExpansion = {
             return undefined;
         }
     },
-    request(obj){
-        
+    chooseImage(count=1){
+        return new Promise((resolve,reject)=>{
+            wx.chooseImage({
+                count: count,
+                sizeType: ['original', 'compressed'],
+                sourceType: ['album', 'camera'],
+                success(res) {
+                    resolve(res);
+                },
+                fail(err){
+                    reject(err)
+                }
+            })
+        })
     }
+
 }
 
 module.exports = wxExpansion;
