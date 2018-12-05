@@ -1,0 +1,27 @@
+<template>
+    <div class="">
+        <video class="record_main" id="videoObj" src="{{url}}" controls @timeupdate="judgeVideoProgress"></video>
+    </div>
+</template>
+
+<script>
+    import wepy from "wepy";
+    export default class PreviewVideo extends wepy.page{
+        data={
+            url:""
+        }
+        methods={
+
+
+            judgeVideoProgress(event){
+                let current = event.detail.currentTime;
+                let total = event.detail.duration;
+                console.log(current,total);
+                if(current + 1 >= total){
+                    console.log(true);
+                }
+            }
+        }
+
+    }
+</script>

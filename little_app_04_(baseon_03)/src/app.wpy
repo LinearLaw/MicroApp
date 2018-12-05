@@ -11,6 +11,9 @@ export default class extends wepy.app {
         pages: [
             'pages/index',
 
+            'pages/video/chooseVideo',
+            'pages/video/textInVideo',
+            'pages/video/previewVideo',
             'pages/video/entrance',
             'pages/video/record',
             'pages/video/auth',

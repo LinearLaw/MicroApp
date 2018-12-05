@@ -11,6 +11,15 @@
         <view class="view__box">
             <button class="btn btn__primary" @tap="commitInfo"> 进入拍摄视频 </button>
         </view>
+        <view class="view__box">
+            <button class="btn btn__primary" @tap="enterChoose"> 进入choose video </button>
+        </view>
+        <view class="view__box">
+            <button class="btn btn__primary" @tap="enterPreview"> 进入video preview </button>
+        </view>
+        <view class="view__box">
+            <button class="btn btn__primary" @tap="enterAllScreen"> 进入video all screen </button>
+        </view>
     </view>
 </template>
 
@@ -43,6 +52,15 @@ export default class VideoEntrance extends wepy.page{
             } else {
                 utils.wxExpansion.toast("请点击同意协议");
             }
+        },
+        enterChoose(){
+            wx.navigateTo({url:"/pages/video/auth?pipe=video/chooseVideo"});
+        },
+        enterPreview(){
+            wx.navigateTo({url:"/pages/video/previewVideo"});
+        },
+        enterAllScreen(){
+            wx.navigateTo({url:"/pages/video/textInVideo"});
         }
     }
     checkboxChange(e) {

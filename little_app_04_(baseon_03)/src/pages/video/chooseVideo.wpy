@@ -1,0 +1,18 @@
+<template>
+    <div class="">
+        <button type="button" name="button" @tap="choose">录制</button>
+    </div>
+</template>
+
+<script>
+    import wepy from "wepy";
+    export default class ChooseVideo extends wepy.page{
+        methods={
+            choose(){
+                wx.chooseVideo({
+                    sourceType:['camera']
+                })
+            }
+        }
+    }
+</script>
