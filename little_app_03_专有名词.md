@@ -263,6 +263,17 @@
 
             同时，整个循环体都放入到组件内部，而不将循环体外置到父组件。
 
+    4、video组件内部的cover-view
+        video里面可以使用cover-view组件，作为覆盖在视频上面的内容。
+        内容使用margin会出现问题，
+
+        假设有一个盒子，定位方式为position:absolute，里面有两个cover-view，
+        设为A，B，两个都设置成inline-block。
+
+        bug场景为：假如A设置一个margin-right:10px，B的右侧10px将会被切掉。
+        解决方案为：以padding来做块级之间的间距，而不考虑使用margin.
+        在IOS上面有此问题，安卓没有。
+
 
 
 
