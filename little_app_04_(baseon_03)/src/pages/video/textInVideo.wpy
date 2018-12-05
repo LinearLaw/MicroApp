@@ -1,0 +1,193 @@
+<template>
+    <view class="record record_all">
+        <view class="record_container" :class="{'record_animate_control':!recordStatus.banStart}">
+            <camera class="record_main special_camera" device-position="front" flash="off" binderror="error">
+                <cover-view class="number_area">
+                    <cover-view class="red_round record_time_run"></cover-view>
+                    <cover-view class="record_time">00 : 00 : {{time>=10?time:"0"+time}}</cover-view>
+                </cover-view>
+                <cover-view class="number_text">
+                    <cover-view class="number_text_content"> “拥有财富、名声、权力，这世界上的一切的男人 “海贼王”哥尔·D·罗杰，在被行刑受死之前说了一句话，让全世界的人都涌向了大海。“想要我的宝藏吗？如果想要的话，那就到海上去找吧，我全部都放在那里。”世界开始迎接“大海贼时代”的来临” </cover-view>
+
+                </cover-view>
+            </camera>
+            <!-- slot里面的内容可以自定义 -->
+            <view class="record_content">
+                <slot name="content"></slot>
+            </view>
+        </view>
+
+        <view class="button_area">
+            <view class="record_attention font_12">视频录制有30s的时间限制，请尽快阅读。</view>
+            <button class="btn btn_primary" @tap="startView" disabled="{{recordStatus.banStart}}"> 开始录制 </button>
+            <button class="btn btn_primary" @tap="stopView" disabled="{{recordStatus.banStop}}"> 停止录制 </button>
+        </view>
+    </view>
+</template>
+
+<script>
+import wepy from "wepy";
+import utils from "../../assets/js/utils.js";
+import _config from "../../config/index.js";
+
+export default class RecordComponent extends wepy.page {
+    data = {
+        ctx: null,
+        openCamera: true,
+        recordStatus: {
+            banStart: false,
+            banStop: true
+        },
+        time: 0,
+        step: "",
+        urlParams: ""
+    }
+
+    props = {
+        targetUrl: String
+    }
+    onLoad() {
+        // get url params , create camera object
+        let urls = utils.urls.getCurrentPageUrlWithArgs();
+        let obj = utils.urls.getUrlParam(urls);
+        this.urlParams = utils.urls.makeUrlParams(obj);
+
+        this.initData();
+        this.ctx = wx.createCameraContext();
+        this.authVerification();
+    }
+    // verificate auth of camera and record , if not , back to auth page
+    authVerification() {
+        let _this = this;
+        wx.getSetting({
+            success: (res) => {
+                if (!res.authSetting["scope.camera"] || !res.authSetting["scope.record"]) {
+                    wx.redirectTo({
+                        url: "/pages/video/auth" + _this.urlParams
+                    });
+                }
+            }
+        })
+    }
+    methods = {
+        // start record , and init camera
+        startView() {
+            var _this = this;
+            new Promise((resolve, reject) => {
+                wx.showModal({
+                    title: "提示",
+                    content: "接下来将录制一段视频",
+                    success: (res) => {
+                        if (res.confirm == true) {
+                            resolve(res);
+                        } else {
+                            reject();
+                        }
+                    }
+                })
+            }).then((res) => {
+                _this.recordStatus.banStart = true;
+                _this.recordStatus.banStop = false;
+                wx.showLoading({
+                    title: "初始化中..."
+                });
+                if (!_this.ctx.startRecord) {
+                    wx.hideLoading();
+                    return;
+                }
+                _this.ctx.startRecord({
+                    timeoutCallback: (res) => {
+                        _this.completeRecord(res);
+                        _this.$apply();
+                    },
+                    success() {
+                        _this.startTime();
+                    },
+                    complete() {
+                        wx.hideLoading();
+                    }
+                });
+                _this.$apply();
+            }, () => {})
+
+        },
+        stopView() {
+            var _this = this;
+            wx.hideLoading();
+            _this.recordStatus.banStart = false;
+            _this.recordStatus.banStop = true;
+            this.ctx.stopRecord({
+                success: (res) => {
+                    _this.completeRecord(res);
+                    _this.$apply();
+                }
+            });
+        }
+    }
+    startTime() {
+        let _this = this;
+        this.step = setInterval(() => {
+
+            _this.time++;
+            if (_this.time <= 0) {
+                clearInterval(_this.step);
+            }
+            _this.$apply();
+        }, 1000)
+    }
+    //完成录制，跳转到targetUrl页面，targetUrl由引入的时候传进来
+    completeRecord(res) {
+        clearInterval(this.step);
+        let _this = this;
+        wx.showLoading({
+            title: "加载中...",
+            complete() {
+                wx.hideLoading();
+                wx.redirectTo({
+                    url: "/pages/" + _this.targetUrl + _this.urlParams + "&file=" + JSON.stringify(res)
+                });
+            }
+        });
+    }
+    initData() {
+        this.ctx = null;
+        this.openCamera = true;
+        this.recordStatus.banStart = false;
+        this.recordStatus.banStop = true;
+        this.time = 0;
+        this.step = "";
+    }
+}
+</script>
+
+<style lang="less">
+    @import "../../assets/less/video.less";
+    .record_all,.record_container ,.special_camera{
+        width:100%;
+        height:100%;
+    }
+    .record_all{
+        .special_camera{
+            width:80%;
+            margin:0 auto;
+        }
+        /*.number_area{
+            bottom:auto;
+            top:15px;
+        }*/
+        .number_text{
+            position:absolute;
+            top:0px;
+            left:0px;
+            background:rgba(255,255,255,0.8);
+            width:100%;
+            padding:15px;
+            .number_text_content{
+                word-break:break-all;
+                width:100%;
+                white-space:normal;
+
+            }
+        }
+    }
+</style>
