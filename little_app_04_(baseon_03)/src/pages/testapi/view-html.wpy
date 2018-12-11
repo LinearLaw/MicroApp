@@ -24,7 +24,7 @@ export default class ViewHtml extends wepy.page {
     mixins = []
 
     data = {
-        url: ""
+        url: "http://172.31.7.16:1234/test.pdf"
     }
 
     computed = {
