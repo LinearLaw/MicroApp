@@ -1,0 +1,41 @@
+<template>
+
+  <view class="title">
+    <view class="h1_title">wxParse 富文本加载</view>
+    <import src="../../assets/js/wxParse/wxParse.wxml"/>
+    <template is="wxParse" data="{{wxParseData:htmlAry.nodes}}"></template>
+    <div>{{wxParseData}}</div>
+  </view>
+
+</template>
+
+<script>
+
+  import wepy from "wepy";
+  import WxParse from "../../assets/js/wxParse/html2json.js";
+  export default class Html extends wepy.page{
+    data = {
+      html:'<p>此外你还可以在 JS 中调用小程序提供的丰富的 API，利用这些 API 可以很方便的调起微信提供的能力，例如获取用户信息、本地存储、微信支付等。在前边的 QuickStart 例子中，在 <code>pages/index/index.js</code> 就调用了 <a href="../../api/wx.getUserInfo.html"><code>wx.getUserInfo</code></a> 获取微信用户的头像和昵称，最后通过 <code>setData</code> 把获取到的信息显示到界面上。更多 API 可以参考文档 <a href="../../framework/app-service/api.html">小程序的API</a> 。</p>',
+      htmlAry:[]
+    }
+
+    onLoad(){
+
+        var list = this.html;//html内容
+        var htmlAry={};
+        htmlAry = WxParse.html2json(list, 'returnData');
+        this.htmlAry = htmlAry;
+        this.$apply();
+    }
+
+  }
+
+</script>
+<style lang="less">
+  @import "../../assets/js/wxParse/wxParse.less";
+  .h1_title{
+    margin:10px 0;
+    font-size:20px;
+    text-align:center;
+  }
+</style>

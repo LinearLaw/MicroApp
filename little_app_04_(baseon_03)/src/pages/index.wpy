@@ -26,6 +26,12 @@
         </navigator>
     </view>
 
+    <view class="view__box">
+        <navigator url="/pages/wxhtml/html">
+            <button class="btn btn__primary"> 富文本 </button>
+        </navigator>
+    </view>
+
 </view>
 </template>
 

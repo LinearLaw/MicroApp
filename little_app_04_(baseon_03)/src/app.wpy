@@ -26,6 +26,8 @@ export default class extends wepy.app {
             "pages/testapi/multiplepic",
 
             "pages/form/entrance",
+
+            "pages/wxhtml/html",
         ],
         window: {
             backgroundTextStyle: 'light',
