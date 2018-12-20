@@ -8,6 +8,18 @@ page{
   width:100%;
   height:100%;
 }
+::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    color: transparent;
+}
+/* clear float */
+.clearfix:after,.clearfix:before{
+    content:"";
+    display:table;
+    clear:both;
+}
+
 .container{
   padding:20rpx 50rpx;
   width:100%;
@@ -32,4 +44,64 @@ page{
 .view__box{
   width:100%;
   margin-bottom:10px;
+}
+/* for inherit */
+.inherit_wh{
+    width:100%;
+    height:100%;
+}
+/* tools style */
+.fl {float: left;}
+.fr {float: right;}
+
+.mg_t10{margin-top:10px;}
+.mg_b10{margin-bottom:10px;}
+.mg_l10{margin-left:10px;}
+.mg_r10{margin-right:10px;}
+
+.pd_t10{padding-top:10px;}
+.pd_b10{padding-bottom:10px;}
+.pd_l10{padding-left:10px;}
+.pd_r10{padding-right:10px;}
+.pad_shrink {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.pad_dwarf {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* 通用文本样式 */
+.text_c{text-align:center;}
+.text_l{text-align:left;}
+.text_r{text-align:right;}
+
+.text_wearning { color: #FF4C10; }
+.text_notice_1 { color: #D2922E; }
+
+.text_dark_blue{color:#002C59;}
+.text_blue{color:#5C8CFF;}
+.text_green{color:#56D04D;}
+.text_orange{color:#F6BE00;}
+
+.text_gray_minus{color:#A6A6A6;}
+.text_gray{ color:#798189; }
+.text_gray_black{ color:#646464; }
+
+.font_12{font-size:24rpx!important;}
+.font_14{font-size:28rpx!important;}
+.font_16{font-size:32rpx!important;}
+.font_18{font-size:36rpx!important;}
+.font_bold{font-weight:bold;}
+
+.opacity_0{ opacity:0; }
+.opacity_1{ opacity:1; }
+
+.animationRefresh{
+  animation:refresh 0.6s infinite linear;
+}
+@keyframes refresh{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
 }

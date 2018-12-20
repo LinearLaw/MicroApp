@@ -1,5 +1,5 @@
 <template>
-    <div class="">
+    <div class="text_c">
         <video class="record_main" id="videoObj" src="{{url}}" controls @timeupdate="judgeVideoProgress"></video>
     </div>
 </template>
@@ -11,8 +11,6 @@
             url:""
         }
         methods={
-
-
             judgeVideoProgress(event){
                 let current = event.detail.currentTime;
                 let total = event.detail.duration;
