@@ -226,53 +226,7 @@
 
 ```
 
-## 一些坑
 
-    1、下拉加载与scroll-view冲突
-        （1）使用scroll-view， 定义scrolltolower作为下拉到底部时触发的事件。
-
-        （2）页面page中，config开启了 enablePullDownRefresh:true 时，
-            scroll-view将会导致无法下拉，下拉无效果。
-
-        （3）此时，将scroll-view改为view，解决。
-
-        替代方案为：config的同级写入onReachBottom事件，下拉到底时，会自动触发。
-        同时onPullDownRefresh作为下拉刷新事件，在该函数里面操作下拉刷新结束
-
-    2、组件传值
-    
-        以下这种方式不被允许：
-            <Modal :modalData="modalData.concelText"></Modal>
-
-        替代方案为：
-            <Modal :modalData="modalData"></Modal>
-
-    3、循环生成的组件具备同一个实例
-
-        <repeat for="{{repeatArr}}" key="index" index="index" item="item">
-            <ContractManageItem :item.sync="item" :index="index" :tabControl="tabControl" ></ContractManageItem>
-        </repeat>
-
-        假如 ContractManageItem 组件，其data里面有一个变量叫isShow，初始值为false，
-        注意，在循环生成的所有 ContractManageItem 中，这个isShow是公用的。
-
-        这简直是神坑。
-        替代方案为：在repeatArr数组的每一项，里面加入一个属性值名为isShow，
-            每次组件内部需要改变isShow的值时，将当前组件对应的索引index，通过$emit到父组件，
-            父组件再去改动repeatArr[index][isShow]的值。
-
-            同时，整个循环体都放入到组件内部，而不将循环体外置到父组件。
-
-    4、video组件内部的cover-view
-        video里面可以使用cover-view组件，作为覆盖在视频上面的内容。
-        内容使用margin会出现问题，
-
-        假设有一个盒子，定位方式为position:absolute，里面有两个cover-view，
-        设为A，B，两个都设置成inline-block。
-
-        bug场景为：假如A设置一个margin-right:10px，B的右侧10px将会被切掉。
-        解决方案为：以padding来做块级之间的间距，而不考虑使用margin.
-        在IOS上面有此问题，安卓没有。
 
 
 

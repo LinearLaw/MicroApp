@@ -2,8 +2,12 @@
 
   <view class="title">
     <view class="h1_title">wxParse 富文本加载</view>
+
+
     <import src="../../assets/js/wxParse/wxParse.wxml"/>
     <template is="wxParse" data="{{wxParseData:htmlAry.nodes}}"></template>
+
+
     <div>{{wxParseData}}</div>
   </view>
 
