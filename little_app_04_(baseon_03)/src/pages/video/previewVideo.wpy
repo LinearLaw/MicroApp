@@ -8,7 +8,7 @@
     import wepy from "wepy";
     export default class PreviewVideo extends wepy.page{
         data={
-            url:""
+            url:"http://172.31.7.2:1234/6ek204kpa7vchervt12t22s85t.mp4"
         }
         methods={
             judgeVideoProgress(event){
