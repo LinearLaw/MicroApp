@@ -2,7 +2,44 @@
 import HtmlToJson from '../wxParse/html2json.js';
 
 module.exports = {
-
+    /**
+     * [33.66 → 33.6600]
+     * number 需要转换的数字
+     * length 保留小数点后多少位
+     */
+    parseRateNumber(number,length){
+        let len = length?length:4;
+        let numArr = (number+"").split(".");
+        let st = "";
+        let se = "";
+        if(numArr[1]){
+            se = numArr[1];
+        }else{
+            se = "";
+        }
+        while(true){
+            if(se.length>=len){
+                break;
+            }else{
+                se += "0";
+            }
+        }
+        return `${numArr[0]}.${se.slice(0,len)}`;
+    },
+    /**
+     * [19900000 → 19,900,000.00]
+     */
+    parseMoney(s){
+        if (!(s)) {return 0.00;}
+        s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(2) + "";
+        var c = s.split(".")[0].split("").reverse();
+        var e = s.split(".")[1];
+        var t = "";
+        for (var i = 0; i < c.length; i++) {
+            t += c[i] + ((i + 1) % 3 == 0 && (i + 1) != c.length ? "," : "");
+        }
+        return t.split("").reverse().join("") + "." + e;
+    },
     /**
      * [parseHtml description]
      * @param  {[type]} str [description]
