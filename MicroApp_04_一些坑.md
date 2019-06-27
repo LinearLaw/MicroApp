@@ -105,3 +105,53 @@
             this.htmlAry = htmlAry;
             this.$apply();
 
+## wx.login
+```
+1、getAccessToken
+    url: GET https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
+    target: 获取access_token；
+    require: 
+        grant_type:"client_credential"
+        appid:"",
+        secret:""
+
+    return:
+        access_token:"",
+        expires_in:"" // 失效时间
+
+2、wx.login()
+    target: 获取用户登录凭证code
+    return:
+        code:"" // 用户登录凭证
+
+3、auth.code2Session
+    url: GET https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
+    target: code 解密
+    require:
+        appid:"",
+        secret:"",
+        js_code:"", // 也就是wx.login获取的code
+        grant_type:"authorization_code" 
+    
+    return:
+        openid:"",
+        session_key:"",
+        unionid:""
+
+3、templateMessage.send
+    url: POST https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=ACCESS_TOKEN
+    target: 发出消息
+    require:
+        access_token:"",
+        touser:"",  // 也就是openid
+        formid:"", // 表单formid，手动获取
+        template_id:"",
+        data:{
+            "data_key1":{
+                "value":"真实差值"
+            },
+            "data_key2":{
+                "value":"633666555"
+            }
+        }
+```

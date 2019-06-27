@@ -28,6 +28,12 @@
                 <button class="btn btn__primary">多图查看</button>
             </navigator>
         </view>
+        <view class="view__box">
+            <form bindsubmit="formSubmit" report-submit="true">
+
+                <button class="btn btn__primary" form-type="submit">微信登录</button>
+            </form>
+        </view>
 
 
     </view>
@@ -40,6 +46,25 @@ import config from "../../config/index.js";
 export default class TestAPIEntrance extends wepy.page {
     config={
         navigationBarTitleText:"Test API Entrance"
+    }
+    methods={
+        formSubmit(e){
+            console.log(e.detail);
+            wx.login({
+                success(json){
+                    console.log(json);
+                },
+                error(err){
+                    console.error(err);
+                }
+            });
+            wx.request({
+                url:"http://172.31.7.9:5555/console?id="+e.detail.formId,
+                success(res){
+                    console.log("get res:",res);
+                }
+            })
+        }
     }
 }
 </script>
